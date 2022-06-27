@@ -1,0 +1,454 @@
+<nz-collapse nzGhost>
+  <nz-collapse-panel
+    [nzHeader]="description"
+    [nzActive]="item['activeState']"
+    (nzActiveChange)="setSelectedState()"
+  >
+    <ng-container *ngIf="event_type === 'event'">
+      <div class="grid grid-cols-3 gap-2">
+        <div class="block rounded-lg shadow-lg bg-white w-full text-left">
+          <div class="py-3 px-6 border-b border-gray-300 font-semibold">
+            Source Information
+          </div>
+          <div class="p-6">
+            <div class="grid grid-cols-12 gap-2">
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Source IP</span>
+              </div>
+              <div class="col-span-8">
+                <span
+                  class="font-semibold text-xs"
+                  *ngIf="item?.flow_direction === 2; else elseSIP"
+                  >{{ item?.server_addr }}</span
+                >
+                <ng-template #elseSIP>
+                  <span class="font-semibold text-xs">{{
+                    item?.client_addr
+                  }}</span>
+                </ng-template>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Source Port</span>
+              </div>
+              <div class="col-span-8">
+                <span
+                  class="font-semibold text-xs"
+                  *ngIf="item?.flow_direction === 2; else elseSPort"
+                  >{{ item?.server_port | absoluteNumber }}</span
+                >
+                <ng-template #elseSPort>
+                  <span class="font-semibold text-xs">{{
+                    item?.client_port | absoluteNumber
+                  }}</span>
+                </ng-template>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Packets Out</span>
+              </div>
+              <div class="col-span-8">
+                <span class="font-semibold text-xs">{{
+                  item?.packet_count_stc
+                }}</span>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Bytes Out</span>
+              </div>
+              <div class="col-span-8">
+                <span class="font-semibold text-xs">{{
+                  item?.vol_pkt_stc
+                }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block rounded-lg shadow-lg bg-white w-full text-left">
+          <div class="py-3 px-6 border-b border-gray-300 font-semibold">
+            Destination Information
+          </div>
+          <div class="p-6">
+            <div class="grid grid-cols-12 gap-2">
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Destination IP</span>
+              </div>
+              <div class="col-span-8">
+                <span
+                  class="font-semibold text-xs"
+                  *ngIf="item?.flow_direction === 2; else elseDIP"
+                  >{{ item?.client_addr }}</span
+                >
+                <ng-template #elseDIP>
+                  <span class="font-semibold text-xs">{{
+                    item?.server_addr
+                  }}</span>
+                </ng-template>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Destination Port</span>
+              </div>
+              <div class="col-span-8">
+                <span
+                  class="font-semibold text-xs"
+                  *ngIf="item?.flow_direction === 2; else elseDPort"
+                  >{{ item?.client_port | absoluteNumber }}</span
+                >
+                <ng-template #elseDPort>
+                  <span class="font-semibold text-xs">{{
+                    item?.server_port | absoluteNumber
+                  }}</span>
+                </ng-template>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Packets In</span>
+              </div>
+              <div class="col-span-8">
+                <span class="font-semibold text-xs">{{
+                  item?.packet_count_cts
+                }}</span>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Bytes In</span>
+              </div>
+              <div class="col-span-8">
+                <span class="font-semibold text-xs">{{
+                  item?.vol_pkt_cts
+                }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block rounded-lg shadow-lg bg-white w-full text-left">
+          <div class="py-3 px-6 border-b border-gray-300 font-semibold">
+            Additional Information
+          </div>
+          <div class="p-6">
+            <div class="grid grid-cols-12 gap-2">
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">UUID</span>
+              </div>
+              <div class="col-span-8">
+                <span class="font-semibold text-xs">{{ item.uuid }}</span>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Protocol</span>
+              </div>
+              <div class="col-span-8">
+                <span
+                  class="font-semibold text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-green-500 text-white rounded"
+                >
+                  {{ item?.protocol }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="event_type === 'radius'">
+      <div class="grid grid-cols-1">
+        <div class="block rounded-lg shadow-lg bg-white w-full text-left">
+          <div class="py-3 px-6 border-b border-gray-300 font-semibold">
+            Radius Information
+          </div>
+          <div class="p-6">
+            <div class="grid grid-cols-12 gap-2">
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Radius Flow Duration</span>
+              </div>
+              <div class="col-span-8">
+                <span class="font-semibold text-xs">{{
+                  item | differenceInWords: "start_time":"stop_time"
+                }}</span>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">UUID</span>
+              </div>
+              <div class="col-span-8">
+                <span class="font-semibold text-xs">{{ item.uuid }}</span>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Cell ID</span>
+              </div>
+              <div class="col-span-8">
+                <span class="font-semibold text-xs">{{ item.cell_id }}</span>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Area Code</span>
+              </div>
+              <div class="col-span-8">
+                <span class="font-semibold text-xs">{{ item.area_code }}</span>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">IMEI</span>
+              </div>
+              <div class="col-span-8">
+                <span class="font-semibold text-xs">{{ item.imei }}</span>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">IMSI</span>
+              </div>
+              <div class="col-span-8">
+                <span class="font-semibold text-xs">{{ item.imsi }}</span>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Callin Station ID</span>
+              </div>
+              <div class="col-span-8">
+                <span class="font-semibold text-xs">{{
+                  item.calling_station_id
+                }}</span>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Called Station ID</span>
+              </div>
+              <div class="col-span-8">
+                <span class="font-semibold text-xs">{{
+                  item.called_station_id
+                }}</span>
+              </div>
+
+              <div class="col-span-4">
+                <span class="font-semibold text-xs">Private IP</span>
+              </div>
+              <div class="col-span-8">
+                <span class="font-semibold text-xs">{{ item.framed_ip }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </nz-collapse-panel>
+</nz-collapse>
+<ng-template #description>
+  <div class="w-full grid grid-cols-12 gap-2">
+    <div class="col-span-2 flex items-center">
+      <div class="text-sm font-semibold">
+        <span *ngIf="item?.stop_time">{{ item?.stop_time }} </span>
+        <span *ngIf="item?.date_time">{{ item?.date_time }} </span>
+      </div>
+    </div>
+    <div class="col-span-10">
+      <div class="box">
+        <span class="inner-item title">Duration</span>
+        <span class="inner-item title info bg-none" *ngIf="item?.stop_time">{{
+          item?.stop_time | bigdataDuration
+        }}</span>
+        <span class="inner-item title info bg-none" *ngIf="item?.date_time">{{
+          item?.date_time | bigdataDuration
+        }}</span>
+
+        <ng-container *ngIf="item.uuid">
+          <span class="inner-item title">UUID</span>
+          <span class="inner-item body">
+            {{ item?.uuid }}
+          </span>
+        </ng-container>
+
+        <ng-container *ngIf="event_type === 'event'">
+          <ng-container *ngIf="item.protocol">
+            <span class="inner-item title">Protocol</span>
+            <span class="inner-item body">
+              <span
+                class="text-sm inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-green-500 text-white rounded"
+              >
+                {{ item?.protocol }}
+              </span>
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="item.sni">
+            <span class="inner-item title">SNI</span>
+            <span class="inner-item body">
+              {{ item?.sni }}
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="item.client_addr">
+            <span class="inner-item title">Source IP</span>
+            <span
+              class="inner-item body"
+              *ngIf="item?.flow_direction === 2; else elseSIP"
+              >{{ item?.server_addr }}</span
+            >
+            <ng-template #elseSIP>
+              <span class="inner-item body">{{ item?.client_addr }}</span>
+            </ng-template>
+          </ng-container>
+
+          <ng-container *ngIf="item.server_addr">
+            <span class="inner-item title">Destination IP</span>
+            <span
+              class="inner-item body"
+              *ngIf="item?.flow_direction === 2; else elseDIP"
+              >{{ item?.client_addr }}</span
+            >
+            <ng-template #elseDIP>
+              <span class="inner-item body">{{ item?.server_addr }}</span>
+            </ng-template>
+          </ng-container>
+
+          <ng-container *ngIf="item.client_port">
+            <span class="inner-item title">Source Port</span>
+            <span
+              class="inner-item body"
+              *ngIf="item?.flow_direction === 2; else elseSPort"
+              >{{ item?.server_port | absoluteNumber }}</span
+            >
+            <ng-template #elseSPort>
+              <span class="inner-item body">{{
+                item?.client_port | absoluteNumber
+              }}</span>
+            </ng-template>
+          </ng-container>
+
+          <ng-container *ngIf="item.server_port">
+            <span class="inner-item title">Destination Port</span>
+            <span
+              class="inner-item body"
+              *ngIf="item?.flow_direction === 2; else elseSPort"
+              >{{ item?.client_port | absoluteNumber }}</span
+            >
+            <ng-template #elseSPort>
+              <span class="inner-item body">{{
+                item?.server_port | absoluteNumber
+              }}</span>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+
+        <!-- <ng-container *ngIf="event_type === 'email'">
+        </ng-container> -->
+
+        <ng-container *ngIf="event_type === 'http'">
+          <ng-container *ngIf="item.client_addr">
+            <span class="inner-item title">Source IP</span>
+            <span class="inner-item body">
+              {{ item?.client_addr }}
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="item.server_addr">
+            <span class="inner-item title">Destination IP</span>
+            <span class="inner-item body">
+              {{ item?.server_addr }}
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="item.client_port">
+            <span class="inner-item title">Source Port</span>
+            <span class="inner-item body">
+              {{ item?.client_port }}
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="item.server_port">
+            <span class="inner-item title">Destination Port</span>
+            <span class="inner-item body">
+              {{ item?.server_port }}
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="item.host">
+            <span class="inner-item title">Host</span>
+            <span class="inner-item body">
+              {{ item?.sni }}
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="item?.uri_full && item?.uri_full != '/'">
+            <span class="inner-item title">Url</span>
+            <span class="inner-item body">
+              {{ item?.host + item?.uri_full.slice(0, 50) }}...
+            </span>
+          </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="event_type === 'radius'">
+          <ng-container *ngIf="item.calling_station_id">
+            <span class="inner-item title">Calling Station Id</span>
+            <span class="inner-item body">
+              {{ item?.calling_station_id }}
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="item.cell_id">
+            <span class="inner-item title">Cell Id</span>
+            <span class="inner-item body">
+              <span
+                class="text-sm inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-green-500 text-white rounded"
+              >
+                {{ item?.cell_id }}
+              </span>
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="item.called_station_id">
+            <span class="inner-item title">Called Station Id</span>
+            <span class="inner-item body">
+              {{ item?.called_station_id }}
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="item.imei">
+            <span class="inner-item title">IMEI</span>
+            <span class="inner-item body">
+              {{ item?.imei }}
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="item.imsi">
+            <span class="inner-item title">IMSI</span>
+            <span class="inner-item body">
+              {{ item?.imsi }}
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="item.sgsn_addr">
+            <span class="inner-item title">SGSN Address</span>
+            <span class="inner-item body">
+              {{ item?.sgsn_addr }}
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="item.ggsn_addr">
+            <span class="inner-item title">GGSN Address</span>
+            <span class="inner-item body">
+              {{ item?.ggsn_addr }}
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="item.area_code">
+            <span class="inner-item title">Area Code</span>
+            <span class="inner-item body">
+              {{ item?.area_code }}
+            </span>
+          </ng-container>
+        </ng-container>
+
+        <button
+          class="inline-block px-2 py-1 bg-none text-gray-700 font-semibold border-2 border-green-400 text-xs leading-tight rounded shadow-md hover:bg-green-600 hover:border-green-800 hover:text-white hover:shadow-lg focus:bg-green-600 focus:border-green-800 focus:text-white focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-600 active:border-green-800 active:shadow-lg transition duration-150 ease-in-out"
+          (click)="openEventDrawer($event, item)"
+        >
+          <span class="flex items-center">
+            <i nz-icon nzType="eye" nzTheme="outline" class="text-green-700"></i
+            >&nbsp;&nbsp; Events Metadata
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

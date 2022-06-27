@@ -1,0 +1,31 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "downlevelIteration": true,
+    "module": "es2020",
+    "outDir": "./dist/out-tsc",
+    "baseUrl": "./",
+    "strict": false,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "plugins": [{ "name": "tslint-language-service" }]
+  },
+  // "angularCompilerOptions": {
+  //   "enableI18nLegacyMessageIdFormat": false,
+  //   "strictInjectionParameters": true,
+  //   "strictInputAccessModifiers": true,
+  //   "strictTemplates": true
+  // }
+}

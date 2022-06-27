@@ -1,0 +1,20 @@
+.box {
+  .inner-item {
+    @apply text-sm py-0.5 px-1.5 mx-2 mb-1 leading-8 rounded-sm break-words;
+  }
+  .title {
+    @apply font-semibold bg-gray-200 text-gray-700;
+  }
+  .info {
+    background: none !important;
+    color: #df7418;
+  }
+}
+
+button {
+  &:hover i,
+  &:focus i,
+  &:active i {
+    @apply text-white text-sm;
+  }
+}

@@ -1,0 +1,8 @@
+.icon {
+  @apply text-xs;
+}
+input {
+  box-shadow: 0 1px 1px -1px rgb(0 0 0 / 20%), 0 3px 2px -2px rgb(0 0 0 / 20%), inset 0 0 0 1px rgb(255 255 255 / 10%);
+  transition: box-shadow 150ms ease-in, background-image 150ms ease-in, background-size 150ms ease-in, background-color 150ms ease-in;
+  border: 1px solid #c1cccb;
+}

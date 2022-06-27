@@ -1,0 +1,18 @@
+<ul class="nx-menu-header">
+  <li *ngFor="let item of menu" class="menu">
+    <a *ngIf="item.disabled" class="opacity-50 cursor-not-allowed">
+      <i class="mr-2 text-base md:border-0 cursor-not-allowed" [class]="item.icon"></i>
+      {{ item.title }}
+    </a>
+    <a
+      *ngIf="!item.disabled"
+      class="attribute"
+      [class.active]="item.title === selectedMenu"
+      (click)="toggleMenu(item.title, item.children, item.path)"
+
+    >
+      <i style="font-size: 0.8rem" class="mr-2" [class]="item.icon"></i>
+      {{ item.title }}
+    </a>
+  </li>
+</ul>

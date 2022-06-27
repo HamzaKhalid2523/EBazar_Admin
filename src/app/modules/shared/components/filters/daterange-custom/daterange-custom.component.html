@@ -1,0 +1,65 @@
+<nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+  <!-- *ngIf="!genesisPage" -->
+  <!-- <input
+    *ngIf="genesisPage"
+    readonly
+    style="position: absolute"
+    type="text"
+    class="pl-3 h-9 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs"
+    placeholder="Select Date Range"
+    [(ngModel)]="selectedCustomRangeText"
+  /> -->
+  <input
+   
+    style="position: absolute"
+    type="text"
+    class="pl-3 h-9 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs"
+    placeholder="Select Date Range"
+    nz-popover
+    nzPopoverTrigger="click"
+    nzPopoverPlacement="bottomRight"
+    [nzPopoverTitle]="contentCustomRangeClose"
+    [nzPopoverContent]="rangeQueriesTemplate"
+    [(nzPopoverVisible)]="popoverCustomRangeVisible"
+    [(ngModel)]="selectedCustomRangeText"
+    (keyup)="changeDateRange()"
+  />
+</nz-input-group>
+<ng-template #suffixIconButton>
+  <span class="px-2 text-gray-400">
+    <button class="h-9" nz-button nzType="primary" nzSearch>
+      <i nz-icon nzType="calendar" style="vertical-align: 0"></i>
+    </button>
+  </span>
+</ng-template>
+
+<ng-template #contentCustomRangeClose>
+  <a class="float-right" (click)="popoverCustomRangeVisible = false"
+    ><i nz-icon nzType="close" nzTheme="outline"></i
+  ></a>
+</ng-template>
+<ng-template #rangeQueriesTemplate>
+  <div style="width: 450px">
+    <h4 class="mb-4 text-gray-600 font-semibold">Set Date</h4>
+
+    <nz-range-picker
+      class="mr-2 mb-3"
+      [nzShowTime]="{ nzFormat: 'HH:mm' }"
+      nzFormat="-dd-MM-yyyy HH:mm"
+      [(ngModel)]="dateRangePicker"
+      (nzOnOk)="onOk($event)"
+    ></nz-range-picker>
+    <nz-divider></nz-divider>
+    <h4 class="mb-4 text-gray-600 font-semibold">Frequently Used</h4>
+    <div class="mb-4 grid grid-cols-2">
+      <div class="range-items" *ngFor="let item of rangeQueries">
+        <a
+          class="my-1 text-gray-400 text-xs hover:text-green-600 focus:text-green-600 active:text-green-600"
+          (click)="timeQueryChanged(item, false)"
+        >
+          {{ item.label }}
+        </a>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,220 @@
+<div class="ac-sub" style="padding: 10px 0 10px 10px">
+  <nz-select
+    class="text-xs"
+    nzAllowClear
+    nzShowSearch
+    nzPlaceHolder="Select Filter"
+    [(ngModel)]="selectedFilter"
+    (ngModelChange)="dataChanged()"
+  >
+    <nz-option
+      *ngFor="let option of queryItems"
+      [nzLabel]="option.name"
+      [nzValue]="option.value"
+    ></nz-option>
+  </nz-select>
+</div>
+
+<div class="ac-sub" style="padding: 10px 0 10px 10px">
+  <nz-select
+    *ngIf="
+      selectedFilter !== 'file_types_array' && selectedFilter !== 'is_viewed'
+    "
+    class="text-xs"
+    nzShowSearch
+    [nzDisabled]="!selectedFilter"
+    [(ngModel)]="selectedOperator"
+    (ngModelChange)="dataChanged()"
+    nzAllowClear
+    nzPlaceHolder="Select Operator"
+  >
+    <nz-option
+      *ngFor="let option of operators"
+      [nzLabel]="option.name"
+      [nzValue]="option.value"
+    ></nz-option>
+  </nz-select>
+  <nz-select
+    *ngIf="
+      selectedFilter === 'file_types_array' || selectedFilter === 'is_viewed'
+    "
+    class="text-xs"
+    nzShowSearch
+    [nzDisabled]="!selectedFilter"
+    [(ngModel)]="selectedOperator"
+    (ngModelChange)="dataChanged()"
+    nzAllowClear
+    nzPlaceHolder="Select Operator"
+  >
+    <nz-option
+      *ngFor="let option of equalOperator"
+      [nzLabel]="option.name"
+      [nzValue]="option.value"
+    ></nz-option>
+  </nz-select>
+</div>
+
+<div class="ac-sub" style="padding: 10px 0 10px 10px" *ngIf="selectedOperator">
+  <ng-container *ngIf="selectedFilter === 'custom_keyword'">
+    <input
+      class="pl-3 h-9 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs"
+      nz-input
+      [(ngModel)]="selectedKeyword"
+      (ngModelChange)="dataChanged()"
+      placeholder="Keyword"
+    />
+  </ng-container>
+  <ng-container
+    *ngIf="
+      selectedFilter !== 'calling_station_id' &&
+      selectedFilter !== 'protocol' &&
+      selectedFilter !== 'file_types_array' &&
+      selectedFilter !== 'receivers' &&
+      selectedFilter !== 'method' &&
+      selectedFilter !== 'code' &&
+      selectedFilter !== 'is_viewed'
+    "
+  >
+    <div>
+      <input
+        class="pl-3 h-9 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs"
+        nz-input
+        [(ngModel)]="filterValue"
+        (ngModelChange)="dataChanged()"
+        placeholder="Value"
+      />
+    </div>
+  </ng-container>
+  <ng-container *ngIf="selectedFilter === 'calling_station_id'">
+    <div>
+      <input
+        class="pl-3 h-9 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs"
+        nz-input
+        [(ngModel)]="filterValue"
+        (ngModelChange)="dataChanged()"
+        numbersOnly
+        maxlength="12"
+        type="text"
+        placeholder="MSISDN 923XXXXXXXXX"
+      />
+    </div>
+  </ng-container>
+  <ng-container *ngIf="selectedFilter === 'protocol'">
+    <div>
+      <nz-select
+        class="text-xs"
+        nzShowSearch
+        [(ngModel)]="filterValue"
+        (nzOnSearch)="protocolChanges($event)"
+        (ngModelChange)="dataChanged()"
+        nzAllowClear
+        nzPlaceHolder="Select Protocol"
+      >
+        <ng-container *ngFor="let option of filteredProtocolList">
+          <nz-option
+            *ngIf="!isLoadingProtocol"
+            [nzLabel]="option"
+            [nzValue]="option"
+          ></nz-option>
+        </ng-container>
+        <nz-option *ngIf="isLoadingProtocol">
+          <i nz-icon nzType="loading" class="loading-icon"></i>
+          Loading Data...
+        </nz-option>
+      </nz-select>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="selectedFilter === 'file_types_array'">
+    <nz-select
+      class="text-xs"
+      [(ngModel)]="filterValue"
+      nzShowSearch
+      nzAllowClear
+      nzPlaceHolder="Select Option"
+    >
+      <nz-option
+        *ngFor="let option of argumentTypes"
+        [nzLabel]="option.label"
+        [nzValue]="option.name"
+      ></nz-option>
+    </nz-select>
+  </ng-container>
+  <ng-container *ngIf="selectedFilter === 'method'">
+    <nz-select
+      class="text-xs"
+      nzShowSearch
+      [(ngModel)]="filterValue"
+      (ngModelChange)="dataChanged()"
+      nzAllowClear
+      nzPlaceHolder="Select HTTP Method"
+    >
+      <nz-option
+        *ngFor="let option of httpMethodsListing"
+        [nzLabel]="option"
+        [nzValue]="option"
+      ></nz-option>
+    </nz-select>
+  </ng-container>
+  <ng-container *ngIf="selectedFilter === 'code'">
+    <nz-select
+      class="text-xs"
+      nzShowSearch
+      [(ngModel)]="filterValue"
+      (ngModelChange)="dataChanged()"
+      nzAllowClear
+      nzPlaceHolder="Select Status Code"
+    >
+      <nz-option
+        *ngFor="let option of httpCodesListing"
+        [nzLabel]="option"
+        [nzValue]="option"
+      ></nz-option>
+    </nz-select>
+  </ng-container>
+  <ng-container *ngIf="selectedFilter === 'is_viewed'">
+    <nz-select
+      class="text-xs"
+      [(ngModel)]="filterValue"
+      (ngModelChange)="dataChanged()"
+      nzShowSearch
+      nzAllowClear
+      nzPlaceHolder="Select Option"
+    >
+      <nz-option
+        *ngFor="let option of argumentTypes"
+        [nzLabel]="option.label"
+        [nzValue]="option.name"
+      ></nz-option>
+    </nz-select>
+  </ng-container>
+</div>
+
+<div class="ac-sub" style="padding: 10px 0 10px 10px; min-height: 50px">
+  <button
+    style="width: 48%"
+    class="secondary-btn float-left w-6/2 inline-block px-5 py-2 bg-gradient-to-br hover:bg-gradient-to-bl text-white font-semibold text-xs leading-tight uppercase rounded shadow-md hover:border-indigo-800 focue:border-indigo-800 active:border-indigo-800 hover:bg-indigo-600 hover:shadow-lg focus:bg-indigo-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-600 active:shadow-lg transition duration-150 ease-in-out"
+    (click)="emitResetFilters()"
+  >
+    Reset!
+  </button>
+  <ng-container *ngIf="selectedFilter !== 'custom_keyword'">
+    <button
+      style="width: 48%"
+      class="secondary-btn float-right w-6/2 inline-block px-5 py-2 bg-gradient-to-br hover:bg-gradient-to-bl text-white font-semibold text-xs leading-tight uppercase rounded shadow-md hover:border-indigo-800 focue:border-indigo-800 active:border-indigo-800 hover:bg-indigo-600 hover:shadow-lg focus:bg-indigo-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-600 active:shadow-lg transition duration-150 ease-in-out"
+      [disabled]="!filterValue"
+      (click)="preProcessFilter()"
+    >
+      Add!
+    </button>
+  </ng-container>
+  <ng-container *ngIf="selectedFilter === 'custom_keyword'">
+    <button
+      style="width: 48%"
+      class="secondary-btn float-right w-6/2 inline-block px-5 py-2 bg-gradient-to-br hover:bg-gradient-to-bl text-white font-semibold text-xs leading-tight uppercase rounded shadow-md hover:border-indigo-800 focue:border-indigo-800 active:border-indigo-800 hover:bg-indigo-600 hover:shadow-lg focus:bg-indigo-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-600 active:shadow-lg transition duration-150 ease-in-out"
+      [disabled]="!filterValue"
+      (click)="preProcessFilter()"
+    >
+      Add!
+    </button>
+  </ng-container>
+</div>

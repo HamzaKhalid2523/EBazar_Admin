@@ -1,0 +1,49 @@
+.picker {
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.avatar {
+  border-radius: 10px;
+  width: 140px;
+  height: 140px;
+  margin: auto;
+  border: 1px solid #c7c8d1;
+}
+.image {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #aaa;
+  font-size: 1.5rem;
+  padding: 10px;
+  background: #eee;
+  border-radius: 0 0 0 10px;
+}
+.icon:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+input[type="file"] {
+  display: none;
+}
+
+.close-icon {
+  background: #ff0d0da6;
+  border-radius: 0 10px 0 10px;
+  color: #fff;
+  font-size: 0.8rem;
+  width: 25px;
+  height: 25px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}

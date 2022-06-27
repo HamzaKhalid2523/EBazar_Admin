@@ -1,0 +1,36 @@
+.picker {
+  height: 100%;
+  /* border: 1px solid #858796; */
+  /* margin: auto; */
+  /* margin-bottom: 30px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.avatar {
+  border-radius: 50%;
+  width: 140px;
+  height: 140px;
+  margin: auto;
+  border: 1px solid #858796;
+}
+.image {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.icon {
+  position: absolute;
+  bottom: 15%;
+  color: #eee;
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+.icon:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+input[type="file"] {
+  display: none;
+}

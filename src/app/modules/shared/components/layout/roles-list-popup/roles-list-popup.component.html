@@ -1,0 +1,28 @@
+<nz-checkbox-wrapper class="w-100 mx-4" *ngIf="viewRolesList">
+  <div nz-row>
+    <div nz-col nzSpan="8" *ngIf="!disableRoles && checkboxDisplayArray.length">
+      <label
+        nz-checkbox
+        [(ngModel)]="selectAll"
+        [nzChecked]="selectAll"
+        (ngModelChange)="selectAllAllowdRoles($event)"
+        >Select All
+      </label>
+    </div>
+    <div nz-col nzSpan="8" *ngFor="let item of checkboxDisplayArray">
+      <label
+        nz-checkbox
+        [(ngModel)]="item.checked"
+        [nzChecked]="item.checked"
+        [nzValue]="item.roleId"
+        [nzDisabled]="disableRoles"
+        (ngModelChange)="logChanges($event)"
+        >{{ item.role }}
+      </label>
+    </div>
+  </div>
+</nz-checkbox-wrapper>
+
+<div *ngIf="loading" class="flex justify-center items-center">
+  <i class="fas fa-sync text-xl fa-spin mr-1 text-green-400 mt-3"></i>
+</div>

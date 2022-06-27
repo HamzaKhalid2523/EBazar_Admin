@@ -1,0 +1,309 @@
+<div
+  class="px-8 py-3 font-semibold flex border-b border-gray-200 font-bold text-white text-sm"
+  style="background: #2199df"
+>
+  Detailed Filters
+</div>
+
+<div
+  class="accordion accordion-flush"
+  id="radiusFilters"
+  *ngIf="!recordsLoading && records.length"
+>
+  <div
+    class="accordion-item border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="calling_sid">
+      <button
+        class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-sm text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="collapse"
+        data-bs-target="#calling_sid-collapse"
+        aria-controls="calling_sid-collapse"
+      >
+        <span class="ml-6">Calling Station Id</span>
+      </button>
+    </h2>
+    <div
+      id="calling_sid-collapse"
+      class="accordion-collapse border-0 collapse"
+      aria-labelledby="calling_sid"
+      data-bs-parent="#radiusFilters"
+    >
+      <div class="accordion-body py-4 px-5">
+        <label
+          style="margin-bottom: 0 !important"
+          nz-checkbox
+          [(ngModel)]="callingStationIdsAll"
+          (ngModelChange)="setCallingOption(callingStationIdsAll)"
+        >
+          View All
+        </label>
+        <div class="divider my-1"></div>
+        <nz-checkbox-group
+          [(ngModel)]="callingStationIdsOptions"
+          (ngModelChange)="
+            processFilter('calling_station_id', callingStationIdsOptions)
+          "
+        ></nz-checkbox-group>
+      </div>
+    </div>
+  </div>
+  <div
+    class="accordion-item border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="called_sid">
+      <button
+        class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-sm text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="collapse"
+        data-bs-target="#called_sid-collapse"
+        aria-controls="called_sid-collapse"
+      >
+        <span class="ml-6">Called Station Id</span>
+      </button>
+    </h2>
+    <div
+      id="called_sid-collapse"
+      class="accordion-collapse border-0 collapse"
+      aria-labelledby="called_sid"
+      data-bs-parent="#radiusFilters"
+    >
+      <div class="accordion-body py-4 px-5">
+        <label
+          style="margin-bottom: 0 !important"
+          nz-checkbox
+          [(ngModel)]="calledStationIdsAll"
+          (ngModelChange)="setCalledOption(calledStationIdsAll)"
+        >
+          View All
+        </label>
+        <div class="divider my-1"></div>
+        <nz-checkbox-group
+          [(ngModel)]="calledStationIdsOptions"
+          (ngModelChange)="
+            processFilter('called_station_id', calledStationIdsOptions)
+          "
+        ></nz-checkbox-group>
+      </div>
+    </div>
+  </div>
+  <div
+    class="accordion-item border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="cid">
+      <button
+        class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-sm text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="collapse"
+        data-bs-target="#cid-collapse"
+        aria-controls="cid-collapse"
+      >
+        <span class="ml-6">Cell Id</span>
+      </button>
+    </h2>
+    <div
+      id="cid-collapse"
+      class="accordion-collapse border-0 collapse"
+      aria-labelledby="cid"
+      data-bs-parent="#radiusFilters"
+    >
+      <div class="accordion-body py-4 px-5">
+        <label
+          style="margin-bottom: 0 !important"
+          nz-checkbox
+          [(ngModel)]="cellIdsAll"
+          (ngModelChange)="setCellOption(cellIdsAll)"
+        >
+          View All
+        </label>
+        <div class="divider my-1"></div>
+        <nz-checkbox-group
+          [(ngModel)]="cellIdsOptions"
+          (ngModelChange)="processFilter('cell_id', cellIdsOptions)"
+        ></nz-checkbox-group>
+      </div>
+    </div>
+  </div>
+  <div
+    class="accordion-item border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="ac">
+      <button
+        class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-sm text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="collapse"
+        data-bs-target="#ac-collapse"
+        aria-controls="ac-collapse"
+      >
+        <span class="ml-6">Area Code</span>
+      </button>
+    </h2>
+    <div
+      id="ac-collapse"
+      class="accordion-collapse border-0 collapse"
+      aria-labelledby="ac"
+      data-bs-parent="#radiusFilters"
+    >
+      <div class="accordion-body py-4 px-5">
+        <label
+          style="margin-bottom: 0 !important"
+          nz-checkbox
+          [(ngModel)]="areaCodesAll"
+          (ngModelChange)="setAreaOption(areaCodesAll)"
+        >
+          View All
+        </label>
+        <div class="divider my-1"></div>
+        <nz-checkbox-group
+          [(ngModel)]="areaCodesOptions"
+          (ngModelChange)="processFilter('area_code', areaCodesOptions)"
+        ></nz-checkbox-group>
+      </div>
+    </div>
+  </div>
+  <div
+    class="accordion-item border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="imei">
+      <button
+        class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-sm text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="collapse"
+        data-bs-target="#imei-collapse"
+        aria-controls="imei-collapse"
+      >
+        <span class="ml-6">IMEI</span>
+      </button>
+    </h2>
+    <div
+      id="imei-collapse"
+      class="accordion-collapse border-0 collapse"
+      aria-labelledby="imei"
+      data-bs-parent="#radiusFilters"
+    >
+      <div class="accordion-body py-4 px-5">
+        <label
+          style="margin-bottom: 0 !important"
+          nz-checkbox
+          [(ngModel)]="imeisAll"
+          (ngModelChange)="setImeiOption(imeisAll)"
+        >
+          View All
+        </label>
+        <div class="divider my-1"></div>
+        <nz-checkbox-group
+          [(ngModel)]="imeisOptions"
+          (ngModelChange)="processFilter('IMEI', imeisOptions)"
+        ></nz-checkbox-group>
+      </div>
+    </div>
+  </div>
+  <div
+    class="accordion-item border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="imsi">
+      <button
+        class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-sm text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="collapse"
+        data-bs-target="#imsi-collapse"
+        aria-controls="imsi-collapse"
+      >
+        <span class="ml-6">IMSI</span>
+      </button>
+    </h2>
+    <div
+      id="imsi-collapse"
+      class="accordion-collapse border-0 collapse"
+      aria-labelledby="imsi"
+      data-bs-parent="#radiusFilters"
+    >
+      <div class="accordion-body py-4 px-5">
+        <label
+          style="margin-bottom: 0 !important"
+          nz-checkbox
+          [(ngModel)]="imsisAll"
+          (ngModelChange)="setImsiOption(imsisAll)"
+        >
+          View All
+        </label>
+        <div class="divider my-1"></div>
+        <nz-checkbox-group
+          [(ngModel)]="imsisOptions"
+          (ngModelChange)="processFilter('IMSI', imsisOptions)"
+        ></nz-checkbox-group>
+      </div>
+    </div>
+  </div>
+  <div
+    class="accordion-item border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="pip">
+      <button
+        class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-sm text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="collapse"
+        data-bs-target="#pip-collapse"
+        aria-controls="pip-collapse"
+      >
+        <span class="ml-6">Private IP</span>
+      </button>
+    </h2>
+    <div
+      id="pip-collapse"
+      class="accordion-collapse border-0 collapse"
+      aria-labelledby="pip"
+      data-bs-parent="#radiusFilters"
+    >
+      <div class="accordion-body py-4 px-5">
+        <label
+          style="margin-bottom: 0 !important"
+          nz-checkbox
+          [(ngModel)]="privateIpsAll"
+          (ngModelChange)="setPrivateOption(privateIpsAll)"
+        >
+          View All
+        </label>
+        <div class="divider my-1"></div>
+        <nz-checkbox-group
+          [(ngModel)]="privateIpsOptions"
+          (ngModelChange)="processFilter('framed_ip', privateIpsOptions)"
+        ></nz-checkbox-group>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="my-10">
+  <div *ngIf="recordsLoading" class="flex justify-center items-center">
+    <div
+      class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-green-600"
+      role="status"
+    >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <ng-template
+    *ngIf="records.length === 0 && !recordsLoading"
+    [ngTemplateOutlet]="noData"
+  ></ng-template>
+</div>
+
+<ng-template #noData>
+  <div class="flex justify-center items-center flex-col pt-5">
+    <img
+      src="assets/images/no_data_dark.png"
+      alt="No Data Found"
+      class="w-10 h-10"
+    />
+    <h3 class="font-semibold bg-gray-200 text-gray-700">No Data Found!</h3>
+  </div>
+</ng-template>

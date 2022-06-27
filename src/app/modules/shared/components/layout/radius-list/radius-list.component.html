@@ -1,0 +1,156 @@
+<div class="flex flex-col">
+  <div class="align-middle inline-block min-w-full">
+    <div class="shadow border-b border-t border-gray-200">
+      <nz-table
+        class="min-w-full divide-y divide-gray-200"
+        #eventsTable
+        [nzData]="records"
+        [nzTotal]="recordsCount"
+        [nzLoading]="recordsLoading"
+        [nzShowPagination]="false"
+        [(nzPageSize)]="pageSize"
+        [nzLoadingIndicator]="loadingTemplate"
+        [nzNoResult]="noResultTemplate"
+      >
+
+      <ng-template #loadingTemplate>
+        <i class="fas fa-sync text-xl fa-spin mr-1 text-green-400 mt-3"></i>
+      </ng-template>
+      <ng-template #noResultTemplate>
+        <i class="fas fa-exclamation-triangle text-2xl mr-1 text-green-400 mt-2.5 "></i>
+        <h2 class="mt-2.5">No Data Found</h2>
+      </ng-template>
+
+        <thead>
+          <tr
+            class="text-white bg-gradient-to-r from-green-500 to-blue-500 text-center wide-width"
+          >
+            <th
+              style="border-top-left-radius: 10px"
+              class="text-left"
+            >
+              <span
+                *ngIf="recordsCount && !recordsLoading"
+                style="margin-right: 25px"
+                nz-checkbox
+                [(ngModel)]="allEventsChecked"
+                (ngModelChange)="updateAllChecked()"
+                [nzIndeterminate]="eventsIndeterminate"
+              >
+              </span>
+              <span>Start Time</span>
+            </th>
+            <th>Duration</th>
+            <th style="min-width: 190px;">End Time</th>
+            <th>MSISDN</th>
+            <!-- <th style="min-width: 130px">Cell ID</th>
+            <th style="min-width: 130px">Area Code</th> -->
+            <!-- <th>IMEI</th> -->
+            <th>IMSI</th>
+            <th style="border-top-right-radius: 10px">Private IP</th>
+            <!-- <th>Details</th> -->
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <ng-container
+            *ngFor="let item of eventsTable.data; let index = index"
+          >
+            <tr
+              [class.bg-gray-100]="index % 2 === 0"
+              [class.activeState]="item?.activeState"
+            >
+            <!-- [style.border-left]="
+            item.is_viewed ? '2px solid #42d1d0' : '2px solid #f12096'
+          " -->
+              <td
+                style="min-width: 230px;"
+                class="text-left text-primary"
+              >
+                <span
+                  style="margin-right: 25px"
+                  nz-checkbox
+                  [nzValue]="item?.uuid"
+                  [ngModel]="item?.eventExported"
+                  (nzCheckedChange)="updateSingleChecked($event, item)"
+                >
+                </span>
+                <span>{{ item?.start_time | date: "medium" }}</span>
+              </td>
+              <td class="font-semibold">{{ item | differenceInWords: "start_time":"stop_time" }}</td>
+              <td>{{ item?.stop_time | date: "medium" }}</td>
+              <td>
+                <span
+                  style="box-shadow: -1px 1px 5px 0px rgb(155 156 161)"
+                  nz-tooltip
+                  [nzTooltipTitle]="item?.calling_station_id"
+                  class="cursor-pointer bg-gradient-to-br from-teal-400 to-blue-500 inline-block py-1 px-2 leading-none text-center whitespace-nowrap align-baseline font-semibold text-white rounded text-xs"
+                  (click)="
+                    addDynamicFilterEvent(
+                      item?.calling_station_id,
+                      'calling_station_id',
+                      'MSISDN'
+                    )
+                  "
+                >
+                  {{ item?.pipedMsisdn }}
+                </span>
+              </td>
+              <!-- <td>
+                <a (click)="addDynamicFilterEvent(item?.cell_id, 'cell_id', 'Cell ID')">
+                  {{ item?.cell_id }}
+                </a>
+              </td>
+              <td>
+                <a (click)="addDynamicFilterEvent(item?.area_code, 'area_code', 'Area Code')">
+                  {{ item?.area_code }}
+                </a>
+              </td> -->
+              <!-- <td>
+                <a (click)="addDynamicFilterEvent(item?.IMEI, 'IMEI', 'IMEI')">
+                  {{ item?.IMEI }}
+                </a>
+              </td> -->
+              <td>
+                <a (click)="addDynamicFilterEvent(item?.IMSI, 'IMSI', 'IMSI')">
+                  {{ item?.IMSI }}
+                </a>
+              </td>
+              <td>
+                <a (click)="addDynamicFilterEvent(item?.framed_ip, 'framed_ip', 'Private IP')">
+                  {{ item?.framed_ip }}
+                </a>
+              </td>
+              <!-- <td>
+                <span class=" flex items-center font-semibold" style="color: rgb(14 165 233);">
+                  <i nz-icon nzType="eye" nzTheme="outline" class="mr-1"></i>
+                  View Details
+                </span>
+              </td> -->
+            </tr>
+          </ng-container>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>
+
+<div class="py-6 flex justify-center">
+  <nz-pagination
+    [nzPageIndex]="pageIndex"
+    [nzTotal]="paginationCount"
+    nzShowSizeChanger
+    [nzPageSizeOptions]="[10, 20, 50, 100]"
+    [nzPageSize]="pageSize"
+    (nzPageIndexChange)="pageIndexChangeEvent($event)"
+    (nzPageSizeChange)="pageSizeChangeEvent($event)"
+  ></nz-pagination>
+</div>
+
+<ng-template #elseTemplate>
+  <span
+    style="background: rgb(254 205 211)"
+    class="ml-3 inline-block py-1 px-3 leading-none text-center whitespace-nowrap align-baseline font-semibold text-gray-700 rounded-lg"
+  >
+    Empty
+  </span>
+</ng-template>

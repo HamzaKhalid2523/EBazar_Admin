@@ -1,0 +1,113 @@
+// ul.nx-menu-header {
+//   @apply h-full flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium;
+
+//   li {
+//     @apply h-full;
+//     a {
+//       @apply h-full flex items-center  block py-2 mx-1  text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-green-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700;
+
+//       i {
+//         @apply text-base hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-green-600;
+//       }
+
+//       &.active {
+//         @apply text-green-500 border-b-2 border-green-500;
+
+//         i {
+//           @apply text-transparent bg-clip-text bg-gradient-to-br from-green-400 to-blue-600;
+//         }
+//       }
+//     }
+//   }
+// }
+
+ul.nx-menu-header {
+  @apply h-full flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium;
+
+  li {
+    @apply h-full;
+    a {
+      @apply h-full text-sm uppercase flex hover:border-b-2 hover:border-green-500 items-center font-semibold block py-2 mx-1  text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-green-500 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700;
+
+      i {
+        @apply text-base hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-green-600;
+      }
+
+      &.active {
+        @apply text-green-500  border-b-2 border-green-500;
+
+        i {
+          @apply text-transparent bg-clip-text bg-gradient-to-br from-green-500 to-blue-600;
+        }
+      }
+    }
+  }
+}
+.attribute {
+  margin: 0 !important;
+}
+nav {
+  width: 100%;
+  height: 40px;
+}
+
+#top-ul {
+  height: 25px;
+  margin: 0;
+}
+
+li {
+  float: left;
+
+  list-style-type: none;
+}
+
+.sub {
+  position: absolute;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+
+  background-color: #ffffff;
+
+  top: 64px;
+  width: 100%;
+  padding-left: 5px;
+
+  font-size: 12pt;
+}
+
+.sub a {
+  color: #fff;
+}
+.background {
+  margin-top: 50px;
+  min-height: 54px;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+.sublist {
+  padding: 15px;
+  border-radius: 0 !important;
+}
+.sub a:hover {
+  background-color: #d46762;
+}
+
+.sub li {
+  padding-right: 25px;
+}
+
+.menu:hover > ul {
+  display: block;
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}
+.hover-to-show {
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.hover-to-show-link:hover .hover-to-show {
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}

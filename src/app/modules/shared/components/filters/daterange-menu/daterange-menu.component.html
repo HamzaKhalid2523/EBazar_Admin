@@ -1,0 +1,104 @@
+<!-- <div class="inline-flex shadow-md hover:shadow-lg focus:shadow-lg radio-group" role="group">
+  <button
+    class="rounded-l inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase hover:bg-green-700 focus:bg-green-700 focus:outline-none focus:ring-0 active:bg-green-800 transition duration-150 ease-in-out"
+    (click)="timeQueryChanged({ label: 'Last 24 Hours', value: 'last_24_hours' })"
+    [ngClass]="{'active-radio-btn': defaultRangeValue === 'last_24_hours'}"
+  >
+    Last 24 Hours
+  </button>
+  <button
+    class="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase hover:bg-green-700 focus:bg-green-700 focus:outline-none focus:ring-0 active:bg-green-800 transition duration-150 ease-in-out"
+    (click)="timeQueryChanged({ label: 'Last 7 Days', value: 'last_7_days' })"
+    [ngClass]="{'active-radio-btn': defaultRangeValue === 'last_7_days'}"
+  >
+    Last 7 Days
+  </button>
+  <button
+    class="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase hover:bg-green-700 focus:bg-green-700 focus:outline-none focus:ring-0 active:bg-green-800 transition duration-150 ease-in-out"
+    (click)="timeQueryChanged({ label: 'Last 30 Days', value: 'last_30_days' })"
+    [ngClass]="{'active-radio-btn': defaultRangeValue === 'last_30_days'}"
+  >
+    Last 30 Days
+  </button>
+  <button
+    class="rounded-r inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase hover:bg-green-700 focus:bg-green-700 focus:outline-none focus:ring-0 active:bg-green-800 transition duration-150 ease-in-out"
+    (click)="timeQueryChanged({ label: 'Last 90 Days', value: 'last_90_days' })"
+    [ngClass]="{'active-radio-btn': defaultRangeValue === 'last_90_days'}"
+  >
+    Last 90 Days
+  </button>
+</div> -->
+
+<div class="">
+  <ul
+    class="flex flex-wrap -mb-px"
+    id="myTab"
+    data-tabs-toggle="#myTabContent"
+    role="tablist"
+  >
+    <li class="mr-2" role="presentation">
+      <button
+        class="outline-0 focus:outline-0 inline-block py-5 px-4 text-sm font-semibold text-center text-gray-500 rounded-t-lg border-b-2 border-transparent dark:text-gray-400 dark:hover:text-gray-300"
+        [class.active]="defaultRangeValue === 'last_24_hours'"
+        (click)="
+          timeQueryChanged({ label: 'Last 24 Hours', value: 'last_24_hours' })
+        "
+        id="24"
+        type="button"
+        role="tab"
+        aria-controls="24"
+        aria-selected="false"
+      >
+        Last 24 Hours
+      </button>
+    </li>
+    <li class="mr-2" role="presentation">
+      <button
+        class="outline-0 focus:outline-0 inline-block py-5 px-4 text-sm font-semibold text-center text-gray-500 rounded-t-lg border-b-2 border-transparent dark:text-gray-400 dark:hover:text-gray-300"
+        [class.active]="defaultRangeValue === 'last_7_days'"
+        (click)="
+          timeQueryChanged({ label: 'Last 7 Days', value: 'last_7_days' })
+        "
+        id="7"
+        type="button"
+        role="tab"
+        aria-controls="7"
+        aria-selected="false"
+      >
+        Last 7 Days
+      </button>
+    </li>
+    <li class="mr-2" role="presentation">
+      <button
+        class="outline-0 focus:outline-0 inline-block py-5 px-4 text-sm font-semibold text-center text-gray-500 rounded-t-lg border-b-2 border-transparent dark:text-gray-400 dark:hover:text-gray-300"
+        [class.active]="defaultRangeValue === 'last_30_days'"
+        (click)="
+          timeQueryChanged({ label: 'Last 30 Days', value: 'last_30_days' })
+        "
+        id="30"
+        type="button"
+        role="tab"
+        aria-controls="30"
+        aria-selected="false"
+      >
+        Last 30 Days
+      </button>
+    </li>
+    <li role="presentation">
+      <button
+        class="outline-0 focus:outline-0 inline-block py-5 px-4 text-sm font-semibold text-center text-gray-500 rounded-t-lg border-b-2 border-transparent dark:text-gray-400 dark:hover:text-gray-300"
+        [class.active]="defaultRangeValue === 'last_90_days'"
+        (click)="
+          timeQueryChanged({ label: 'Last 90 Days', value: 'last_90_days' })
+        "
+        id="90"
+        type="button"
+        role="tab"
+        aria-controls="90"
+        aria-selected="false"
+      >
+        Last 90 Days
+      </button>
+    </li>
+  </ul>
+</div>

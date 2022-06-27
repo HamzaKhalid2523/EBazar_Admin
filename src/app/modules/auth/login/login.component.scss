@@ -1,0 +1,95 @@
+/* From css.login-btns.io by @westitan */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+  width: 100%;
+  padding: 10px;
+  font-size: 0.875rem;
+  margin-bottom: 30px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #232738;
+  -webkit-text-fill-color: #b7b7bf;
+  -webkit-box-shadow: 0 0 0px 1000px #21222f inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.login-btn {
+  position: relative;
+  padding: 8px 0;
+  display: block;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  border-radius: 10px;
+  width: 100%;
+  border: 1px solid #451426;
+}
+
+.login-btn span {
+  position: relative;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 8px;
+  z-index: 1;
+}
+
+.login-btn .liquid {
+  position: absolute;
+  top: -80px;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: #931542;
+  box-shadow: inset 0 0 50px rgb(0 0 0 / 50%);
+  transition: 0.5s;
+}
+
+.login-btn .liquid::after,
+.login-btn .liquid::before {
+  content: '';
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -75%);
+  background: #fff;
+}
+
+.login-btn .liquid::before {
+  border-radius: 45%;
+  background: rgba(20, 20, 20, 0.6);
+  animation: animate 5s linear infinite;
+}
+
+.login-btn .liquid::after {
+  border-radius: 40%;
+  background: rgba(20, 20, 20, .3);
+  animation: animate 10s linear infinite;
+}
+
+.login-btn:hover .liquid {
+  top: -120px;
+}
+
+@keyframes animate {
+  0% {
+    transform: translate(-50%, -75%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -75%) rotate(360deg);
+  }
+}
+
+.topright {
+  position: absolute;
+  top: 32px;
+  left: 422px;
+  font-size: 30px;
+  font-weight: 500;
+  color: #dd135b;
+}

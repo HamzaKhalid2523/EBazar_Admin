@@ -1,0 +1,357 @@
+<div
+  class="flex-grow flex overflow-x-hidden"
+  [style.height]="topMenuStatus ? '87vh' : '93vh'"
+  [style.transition]="topMenuStatus ? 'height 1s' : 'none'"
+>
+  <div
+    style="transition: width 0.8s"
+    [ngClass]="{
+      'w-48': filterDrawerVisible,
+      'xl:w-72': filterDrawerVisible,
+      'w-0': !filterDrawerVisible
+    }"
+    class="flex-shrink-0 border-r border-gray-200 dark:border-gray-800 h-full overflow-y-auto lg:block hidden"
+  >
+    <div class="p-5">
+      <div class="ac ac-main">
+        <input class="ac-input" id="ac-2" name="ac-2" type="checkbox" checked />
+        <label class="ac-label" for="ac-2">
+          <span
+            class="text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-green-600"
+            >Filters</span
+          >
+        </label>
+
+        <article class="ac-text">
+          <div class="ac-sub" style="padding: 10px 0 10px 10px">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+              <input
+                style="position: absolute"
+                type="text"
+                class="pl-3 h-9 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs"
+                placeholder="Search"
+                [(ngModel)]="search_string"
+              />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+              <span class="px-2 text-gray-400">
+                <button
+                  class="h-9"
+                  nz-button
+                  nzType="primary"
+                  nzSearch
+                  (click)="statusSelected()"
+                >
+                  <i nz-icon nzType="search" style="vertical-align: 0"></i>
+                </button>
+              </span>
+            </ng-template>
+          </div>
+
+          <div class="ac-sub" style="padding: 10px 0 10px 10px">
+            <nz-select
+              class="text-xs"
+              [(ngModel)]="selectedStatus"
+              (ngModelChange)="statusSelected()"
+              nzAllowClear
+              nzShowSearch
+              nzPlaceHolder="Status"
+            >
+              <nz-option nzValue="all" nzLabel="All"></nz-option>
+              <nz-option nzValue="true" nzLabel="Enabled"></nz-option>
+              <nz-option nzValue="false" nzLabel="Disabled"></nz-option>
+            </nz-select>
+          </div>
+
+          <div class="ac-sub" style="padding: 10px 0 10px 10px">
+            <nz-select
+              class="text-xs"
+              [(ngModel)]="selectedEmail"
+              (ngModelChange)="statusSelected()"
+              nzAllowClear
+              nzShowSearch
+              nzPlaceHolder="Email"
+            >
+              <nz-option
+                *ngFor="let item of uniqueUsers"
+                [nzValue]="item"
+                [nzLabel]="item"
+              ></nz-option>
+            </nz-select>
+          </div>
+        </article>
+      </div>
+
+      <div class="ac">
+        <input class="ac-input" id="ac-3" name="ac-3" type="checkbox" checked />
+        <label class="ac-label" for="ac-3"
+          ><span
+            class="text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-green-600"
+            >Options</span
+          ></label
+        >
+        <article class="ac-text">
+          <div class="ac-sub" style="padding: 10px 0 10px 10px">
+            <button
+              style="
+                border: 1px solid #3281a1;
+                box-shadow: -1px 1px 5px 0px rgb(87 114 122);
+                width: 88%;
+                margin: 0 6%;
+              "
+              class="font-semibold w-full h-9 transform motion-safe:hover:scale-110 text-white bg-gradient-to-r from-green-500 to-cyan-600 hover:bg-gradient-to-l focus:ring-4 focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-xs px-10 py-2 text-center"
+              (click)="getAllData()"
+            >
+              Search
+            </button>
+          </div>
+
+          <div class="ac-sub" style="padding: 10px 0 10px 10px">
+            <button
+              style="width: 88%; margin: 0 6%"
+              class="secondary-btn font-semibold w-full h-9 transform motion-safe:hover:scale-110 text-white bg-gradient-to-r hover:bg-gradient-to-l focus:ring-4 focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-xs px-10 py-2 text-center"
+              (click)="showCreateModal()"
+            >
+              Add New Admin
+            </button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+  <div
+    class="flex-grow bg-white dark:bg-gray-900 overflow-y-auto"
+    style="margin: 15px; transition: width 0.8s"
+  >
+    <div
+      class="sm:px-7 sm:py-4 px-4 py-2 flex flex-col w-full border-b border-gray-200 bg-white dark:bg-gray-900 dark:text-white dark:border-gray-800 sticky top-0 z-10"
+    >
+      <div class="flex w-full items-center">
+        <div
+          class="flex items-center text-2xl text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-green-600 font-semibold"
+        >
+          <div
+            class="flex text-xs cursor-pointer inline-block py-2 px-2 mr-6 leading-noner whitespace-nowrap align-baseline font-bold bg-gradient-to-br from-green-500 to-cyan-600 text-white rounded"
+            (click)="toggleFilterDrawer()"
+          >
+            <i
+              nz-icon
+              nzType="left"
+              nzTheme="outline"
+              *ngIf="filterDrawerVisible"
+            ></i>
+            <i
+              nz-icon
+              nzType="right"
+              nzTheme="outline"
+              *ngIf="!filterDrawerVisible"
+            ></i>
+          </div>
+          Admin/Operator Management
+          <span *ngIf="dataTotalCount" class="ml-2"
+            >({{ dataTotalCount }})</span
+          >
+        </div>
+      </div>
+    </div>
+    <div
+      class="sm:p-5 p-3 shadow border-b border-t border-gray-200 table-scroll"
+      style="overflow: scroll"
+      [style.height]="topMenuStatus ? '77vh' : '83vh'"
+      [style.transition]="topMenuStatus ? 'height 1s' : 'none'"
+    >
+      <div class="flex flex-col">
+        <div class="align-middle inline-block min-w-full">
+          <div class="shadow border-b border-t border-gray-200">
+            <nz-table
+              class="min-w-full divide-y divide-gray-200"
+              #eventsTable
+              [nzData]="dataList"
+              [nzTotal]="dataTotalCount"
+              [nzLoading]="dataLoading"
+              [nzShowPagination]="false"
+              [(nzPageSize)]="pageSize"
+              [nzLoadingIndicator]="loadingTemplate"
+              [nzNoResult]="noResultTemplate"
+            >
+              <ng-template #loadingTemplate>
+                <i
+                  class="fas fa-sync text-xl fa-spin mr-1 text-green-400 mt-3"
+                ></i>
+              </ng-template>
+              <ng-template #noResultTemplate>
+                <i
+                  class="fas fa-exclamation-triangle text-2xl mr-1 text-green-400 mt-2.5"
+                ></i>
+                <h2 class="mt-2.5">No Data Found</h2>
+              </ng-template>
+
+              <thead>
+                <tr
+                  class="text-white bg-gradient-to-r from-green-500 to-blue-500 text-center"
+                >
+                  <th
+                    style="border-top-left-radius: 10px; min-width: 0"
+                    class="text-left"
+                  >
+                    #
+                  </th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Role</th>
+                  <th>CNIC</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Details</th>
+                  <th style="border-top-right-radius: 10px">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <ng-container
+                  *ngFor="let data of eventsTable.data; let i = index"
+                >
+                  <tr [class.bg-gray-100]="i % 2 === 0">
+                    <td class="text-left text-primary font-semibold">
+                      {{ i + 1 + (pageIndex - 1) * pageSize }}.
+                    </td>
+                    <td>{{ data.username }}</td>
+                    <td>{{ data.email }}</td>
+                    <td>{{ data.phone }}</td>
+                    <td>{{ data.role | ngxCapitalize }}</td>
+                    <td>{{ data?.cnic }}</td>
+                    <td>
+                      {{
+                        data?.createdAt || data?.date_created | date: "medium"
+                      }}
+                    </td>
+                    <td
+                      class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800"
+                    >
+                      <span
+                        *ngIf="data.status"
+                        style="min-width: 100px"
+                        class="transform motion-safe:hover:scale-110 bg-gradient-to-br from-teal-400 to-blue-500 inline-block py-1 px-2 leading-none text-center whitespace-nowrap align-baseline font-semibold text-white rounded text-xs"
+                      >
+                        Enabled
+                      </span>
+                      <span
+                        *ngIf="!data.status"
+                        style="min-width: 100px"
+                        class="transform motion-safe:hover:scale-110 bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-br inline-block py-1 px-4 leading-none text-center whitespace-nowrap align-baseline font-semibold text-white rounded text-xs hover:text-white"
+                      >
+                        Disabled
+                      </span>
+                    </td>
+                    <td>
+                      <div #detailView>
+                        <a
+                          class="relative cursor-pointer transform motion-safe:hover:scale-110 bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-br inline-block py-1 px-4 leading-none text-center whitespace-nowrap align-baseline font-semibold text-white rounded text-xs hover:text-white"
+                        >
+                          <i
+                            nz-icon
+                            nzType="eye"
+                            nzTheme="outline"
+                            class="absolute"
+                            style="left: 0.5rem"
+                          ></i>
+                          <span style="margin-left: 0.7rem">View Details</span>
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <ng-container>
+                        <a tooltip="Update" nz-tooltip nzTooltipTitle="Edit" (click)="showEditModal(data)">
+                          <i nz-icon nzType="edit" nzTheme="outline" class="text-primary"></i>
+                        </a>&nbsp;
+                        <nz-divider nzType="vertical" class="border-l border-primary"></nz-divider>&nbsp;
+                      </ng-container>
+                      <ng-container>
+                        <a
+                          tooltip="Delete"
+                          nz-popconfirm
+                          nz-tooltip
+                          nzTooltipTitle="Delete"
+                          nzPopconfirmTitle="Are you sure, you want to delete this user?"
+                          nzPopconfirmPlacement="bottom"
+                          nzPopconfirmPlacement="leftTop"
+                          (nzOnConfirm)="deleteData(data)"
+                        >
+                          <i nz-icon nzType="delete" nzTheme="outline" class="text-primary"></i>
+                        </a>&nbsp;
+                        <nz-divider nzType="vertical" class="border-l border-primary"></nz-divider>&nbsp;
+                      </ng-container>
+                      <ng-container>
+                        <a
+                          tooltip="Change Status"
+                          nz-tooltip
+                          nzTooltipTitle="Change Status"
+                          nz-popconfirm
+                          nzPopconfirmTitle="Are you sure, you want to {{
+                            data?.status ? 'Disable' : 'Enable'
+                          }} Status?"
+                          nzPopconfirmPlacement="bottom"
+                          nzPopconfirmPlacement="leftTop"
+                          (nzOnConfirm)="changeStatus(data)"
+                        >
+                          <i *ngIf="!data?.status" nz-icon nzType="check-square" nzTheme="outline" class="text-primary"></i>
+                          <i
+                            *ngIf="data?.status"
+                            class="color-danger"
+                            nz-icon
+                            nzType="close-square"
+                            nzTheme="outline"
+                            class="text-primary"
+                          ></i> </a
+                        >&nbsp;
+                      </ng-container>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+      </div>
+
+      <div class="py-6 flex justify-center">
+        <nz-pagination
+          [nzPageIndex]="pageIndex"
+          [nzTotal]="dataTotalCount"
+          nzShowSizeChanger
+          [nzPageSizeOptions]="[10, 20, 50, 100]"
+          [nzPageSize]="pageSize"
+          (nzPageIndexChange)="pageIndexChanged($event)"
+          (nzPageSizeChange)="pageSizeChanged($event)"
+        ></nz-pagination>
+      </div>
+
+      <ng-template #elseTemplate>
+        <span
+          style="background: rgb(254 205 211)"
+          class="ml-3 inline-block py-1 px-3 leading-none text-center whitespace-nowrap align-baseline font-semibold text-gray-700 rounded-lg"
+        >
+          Empty
+        </span>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<nz-modal
+  *ngIf="formVisible"
+  [(nzVisible)]="formVisible"
+  [nzTitle]="formType === 'Update' ? 'Update User' : 'Add New Admin/Operator'"
+  [nzFooter]="null"
+  [nzMaskClosable]="false"
+  [nzWidth]="1400"
+  (nzOnCancel)="formVisible = false"
+>
+  <ng-container *nzModalContent>
+    <app-add-admin
+      [formType]="formType"
+      [updatedData]="modalData"
+      (modalVisible)="getAllData()"
+    ></app-add-admin>
+  </ng-container>
+</nz-modal>

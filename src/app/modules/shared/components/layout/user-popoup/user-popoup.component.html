@@ -1,0 +1,29 @@
+<nz-tag [nzColor]="'magenta'" *ngIf="!data?.users_assigned.length">No Users!</nz-tag>
+<ng-container *ngFor="let user of data?.users_assigned; let i = index">
+  <nz-tag [nzColor]="'blue'" *ngIf="i < 2">
+    {{ user?.name || user?.username | titlecase }}
+  </nz-tag>
+</ng-container>
+<nz-tag
+  *ngIf="data?.users_assigned.length > 2"
+  [nzColor]="'blue'"
+  nz-popover
+  nzPopoverPlacement="bottom"
+  nzPopoverTrigger="click"
+  nzPopoverOverlayClassName="customPopover"
+  [(nzPopoverVisible)]="popoverFilterVisible"
+  [nzPopoverContent]="contentTemplate"
+  (nzPopoverVisibleChange)="setSelectedUsers(data?.users_assigned)"
+>
+  +{{ data?.users_assigned.length - 2 }} More Users
+</nz-tag>
+
+<ng-template #contentTemplate>
+  <ng-container *ngIf="selectedUsers && selectedUsers.length">
+    <ng-container *ngFor="let user of selectedUsers; let i = index">
+      <nz-tag class="mb-1" [nzColor]="'blue'">
+        {{ user?.name || user?.username | titlecase }}
+      </nz-tag>
+    </ng-container>
+  </ng-container>
+</ng-template>

@@ -1,0 +1,58 @@
+<div class="row" style="padding: 5px 0">
+  <div class="col-12">
+    <div *ngIf="loading" class="download-loader mr-3 border-r border-gray-500">
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div *ngIf="filesData.length" class="content-list">
+      <div
+        class="content-item border-r border-gray-500"
+        *ngFor="let item of filesData; let i = index; trackBy: trackByIndex"
+      >
+        <nz-progress *ngIf="item?.progress < 100" [nzPercent]="item?.progress" nzType="circle" [nzWidth]="30"></nz-progress>
+        <i
+          *ngIf="item?.progress === 100 && item?.status === 'No Data Found!'"
+          class="fas fa-exclamation-triangle text-md mr-1 text-green-400"
+        ></i>
+        <a
+          *ngIf="item?.progress === 100 && item?.status === 'Completed'"
+          (click)="downloadData(item)"
+        >
+          <i
+            class="text-md mr-1 text-green-400"
+            nz-icon nzType="download" nzTheme="outline"
+          ></i>
+          <h3 class="title">{{ item?.title }}</h3>
+        </a>
+        <h3
+          *ngIf="item?.progress !== 100 || item?.status !== 'Completed'"
+          class="title font-semibold text-sm"
+        >
+          {{ item?.title }}
+        </h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="action-btns">
+  <button
+    class="flex items-center float-left inline-block px-3 py-2 bg-green-400 text-white font-semibold text-xs leading-tight uppercase rounded shadow-md hover:border-green-800 focue:border-green-800 active:border-green-800 hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-600 active:shadow-lg transition duration-150 ease-in-out"
+    nbButton
+    status="info"
+    (click)="openNewTab('/pages/export-module')"
+  >
+    <i nz-icon nzType="download" nzTheme="outline" class="mr-2"></i>
+    Open Downloads
+  </button>
+  <button
+    class="flex items-center float-left inline-block px-3 py-2 ml-2 bg-green-400 text-white font-semibold text-xs leading-tight uppercase rounded shadow-md hover:border-green-800 focue:border-green-800 active:border-green-800 hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-600 active:shadow-lg transition duration-150 ease-in-out"
+    nbButton
+    status="info"
+    (click)="close()"
+  >
+    <i nz-icon nzType="close" nzTheme="outline" class="mr-2"></i>
+    Close
+  </button>
+</div>

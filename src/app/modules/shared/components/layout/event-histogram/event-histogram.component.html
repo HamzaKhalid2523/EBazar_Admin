@@ -1,0 +1,20 @@
+<apex-chart-histogram
+  *ngIf="!eventsLoading && eventsData"
+  [chartData]="eventsData"
+></apex-chart-histogram>
+
+<!-- <apex-chart-line *ngIf="!eventsLoading && eventsData" [chartData]="eventsData"></apex-chart-line> -->
+
+<ng-template *ngIf="eventsLoading" [ngTemplateOutlet]="loadingTemplate"></ng-template>
+<ng-template *ngIf="eventsData.length === 0 && !eventsLoading" [ngTemplateOutlet]="noData"></ng-template>
+
+<ng-template #loadingTemplate>
+  <i class="fas fa-sync text-xl fa-spin mr-1 text-green-400 mt-3"></i>
+</ng-template>
+
+<ng-template #noData>
+  <div class="flex justify-center items-center flex-col pt-5">
+    <i class="fas fa-exclamation-triangle text-2xl mr-1 text-green-400 mt-2.5 "></i>
+    <h2 class="mt-2.5">No Data Found</h2>
+  </div>
+</ng-template>

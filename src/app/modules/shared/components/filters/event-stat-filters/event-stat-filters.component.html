@@ -1,0 +1,267 @@
+<div
+  class="px-8 py-3 font-semibold flex border-b border-gray-200 font-bold text-white text-sm"
+  style="background: #2199df"
+>
+  Detailed Filters
+</div>
+
+<div
+  class="accordion accordion-flush"
+  id="eventFilters"
+  *ngIf="!recordsLoading && records.length"
+>
+  <div
+    class="accordion-item border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="client-addr">
+      <button
+        class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-sm text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="collapse"
+        data-bs-target="#client-addr-collapse"
+        aria-controls="client-addr-collapse"
+      >
+        <span class="ml-6">Client IP</span>
+      </button>
+    </h2>
+    <div
+      id="client-addr-collapse"
+      class="accordion-collapse border-0 collapse"
+      aria-labelledby="client-addr"
+      data-bs-parent="#eventFilters"
+    >
+      <div class="accordion-body py-4 px-5">
+        <label
+          style="margin-bottom: 0 !important"
+          nz-checkbox
+          [(ngModel)]="clientIpsAll"
+          (ngModelChange)="setClientIpOption(clientIpsAll)"
+        >
+          View All
+        </label>
+        <div class="divider my-1"></div>
+        <nz-checkbox-group
+          [(ngModel)]="clientIpsOptions"
+          (ngModelChange)="processFilter('client_addr', clientIpsOptions)"
+        ></nz-checkbox-group>
+      </div>
+    </div>
+  </div>
+  <div
+    class="accordion-item border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="server-addr">
+      <button
+        class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-sm text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="collapse"
+        data-bs-target="#server-addr-collapse"
+        aria-controls="server-addr-collapse"
+      >
+        <span class="ml-6">Server IP</span>
+      </button>
+    </h2>
+    <div
+      id="server-addr-collapse"
+      class="accordion-collapse border-0 collapse"
+      aria-labelledby="server-addr"
+      data-bs-parent="#eventFilters"
+    >
+      <div class="accordion-body py-4 px-5">
+        <label
+          style="margin-bottom: 0 !important"
+          nz-checkbox
+          [(ngModel)]="serverIpsAll"
+          (ngModelChange)="setServerIpOption(serverIpsAll)"
+        >
+          View All
+        </label>
+        <div class="divider my-1"></div>
+        <nz-checkbox-group
+          [(ngModel)]="serverIpsOptions"
+          (ngModelChange)="processFilter('server_addr', serverIpsOptions)"
+        ></nz-checkbox-group>
+      </div>
+    </div>
+  </div>
+  <div
+    class="accordion-item border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="client-port">
+      <button
+        class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-sm text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="collapse"
+        data-bs-target="#client-port-collapse"
+        aria-controls="client-port-collapse"
+      >
+        <span class="ml-6">Client port</span>
+      </button>
+    </h2>
+    <div
+      id="client-port-collapse"
+      class="accordion-collapse border-0 collapse"
+      aria-labelledby="client-port"
+      data-bs-parent="#eventFilters"
+    >
+      <div class="accordion-body py-4 px-5">
+        <label
+          style="margin-bottom: 0 !important"
+          nz-checkbox
+          [(ngModel)]="clientPortsAll"
+          (ngModelChange)="setClientPortOption(clientPortsAll)"
+        >
+          View All
+        </label>
+        <div class="divider my-1"></div>
+        <nz-checkbox-group
+          [(ngModel)]="clientPortsOptions"
+          (ngModelChange)="processFilter('client_port', clientPortsOptions)"
+        ></nz-checkbox-group>
+      </div>
+    </div>
+  </div>
+  <div
+    class="accordion-item border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="server-port">
+      <button
+        class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-sm text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="collapse"
+        data-bs-target="#server-port-collapse"
+        aria-controls="server-port-collapse"
+      >
+        <span class="ml-6">Server Port</span>
+      </button>
+    </h2>
+    <div
+      id="server-port-collapse"
+      class="accordion-collapse border-0 collapse"
+      aria-labelledby="server-port"
+      data-bs-parent="#eventFilters"
+    >
+      <div class="accordion-body py-4 px-5">
+        <label
+          style="margin-bottom: 0 !important"
+          nz-checkbox
+          [(ngModel)]="serverPortsAll"
+          (ngModelChange)="setServerPortOption(serverPortsAll)"
+        >
+          View All
+        </label>
+        <div class="divider my-1"></div>
+        <nz-checkbox-group
+          [(ngModel)]="serverPortsOptions"
+          (ngModelChange)="processFilter('server_port', serverPortsOptions)"
+        ></nz-checkbox-group>
+      </div>
+    </div>
+  </div>
+  <div
+    class="accordion-item border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="protocol">
+      <button
+        class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-sm text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="collapse"
+        data-bs-target="#protocol-collapse"
+        aria-controls="protocol-collapse"
+      >
+        <span class="ml-6">Protocol</span>
+      </button>
+    </h2>
+    <div
+      id="protocol-collapse"
+      class="accordion-collapse border-0 collapse"
+      aria-labelledby="protocol"
+      data-bs-parent="#eventFilters"
+    >
+      <div class="accordion-body py-4 px-5">
+        <label
+          style="margin-bottom: 0 !important"
+          nz-checkbox
+          [(ngModel)]="protocolsAll"
+          (ngModelChange)="setProtocolOption(protocolsAll)"
+        >
+          View All
+        </label>
+        <div class="divider my-1"></div>
+        <nz-checkbox-group
+          [(ngModel)]="protocolsOptions"
+          (ngModelChange)="processFilter('protocol', protocolsOptions)"
+        ></nz-checkbox-group>
+      </div>
+    </div>
+  </div>
+  <div
+    class="accordion-item border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="sni">
+      <button
+        class="accordion-button collapsed relative flex items-center w-full py-4 px-5 text-sm text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="collapse"
+        data-bs-target="#sni-collapse"
+        aria-controls="sni-collapse"
+      >
+        <span class="ml-6">SNI</span>
+      </button>
+    </h2>
+    <div
+      id="sni-collapse"
+      class="accordion-collapse border-0 collapse"
+      aria-labelledby="sni"
+      data-bs-parent="#eventFilters"
+    >
+      <div class="accordion-body py-4 px-5">
+        <label
+          style="margin-bottom: 0 !important"
+          nz-checkbox
+          [(ngModel)]="snisAll"
+          (ngModelChange)="setSniOption(snisAll)"
+        >
+          View All
+        </label>
+        <div class="divider my-1"></div>
+        <nz-checkbox-group
+          [(ngModel)]="snisOptions"
+          (ngModelChange)="processFilter('sni', snisOptions)"
+        ></nz-checkbox-group>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="my-10">
+  <div *ngIf="recordsLoading" class="flex justify-center items-center">
+    <div
+      class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-green-600"
+      role="status"
+    >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <ng-template
+    *ngIf="records.length === 0 && !recordsLoading"
+    [ngTemplateOutlet]="noData"
+  ></ng-template>
+</div>
+
+<ng-template #noData>
+  <div class="flex justify-center items-center flex-col pt-5">
+    <img
+      src="assets/images/no_data_dark.png"
+      alt="No Data Found"
+      class="w-10 h-10"
+    />
+    <h3 class="font-semibold bg-gray-200 text-gray-700">No Data Found!</h3>
+  </div>
+</ng-template>

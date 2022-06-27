@@ -1,0 +1,177 @@
+<!-- <nz-checkbox-wrapper class="w-full mx-4" *ngIf="viewRolesList">
+  <div *ngIf="!disableRoles && checkboxDisplayArray.length" class="my-2">
+    <label
+      nz-checkbox
+      [(ngModel)]="selectAll"
+      [nzChecked]="selectAll"
+      (ngModelChange)="selectAllAllowdRoles($event)"
+    >
+      Select All
+    </label>
+  </div>
+  <div class="grid grid-cols-12">
+    <ng-container *ngFor="let item of latestRolesArray; let i = index">
+      <div class="col-span-4 my-2">
+        <label>{{item?.roleName}}</label>
+      </div>
+      <div class="col-span-8 my-2">
+        <div class="grid grid-cols-12">
+          <div class="col-span-3" *ngFor="let data of item.roleData">
+            <label
+              nz-checkbox
+              [(ngModel)]="data?.checked"
+              [nzChecked]="data?.checked"
+              [nzValue]="data?.roleId"
+              (ngModelChange)="logChanges($event)"
+            >
+              {{ data.operation }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</nz-checkbox-wrapper> -->
+
+
+<!-- <nz-table
+  class="min-w-full divide-y divide-gray-200"
+  #eventsTable
+  [nzData]="latestRolesArray"
+  [nzLoading]="null"
+  [nzShowPagination]="false"
+  [nzNoResult]="noResultTemplate"
+  >
+
+  <ng-template #noResultTemplate>
+  <i class="fas fa-exclamation-triangle text-2xl mr-1 text-green-400 mt-2.5 "></i>
+  <h2 class="mt-2.5">No Data Found</h2>
+  </ng-template>
+
+  <thead>
+    <tr
+      class="text-white bg-gradient-to-r from-green-500 to-blue-500 text-center"
+    >
+      <th style="border-top-left-radius: 10px; min-width: 0" class="text-left">
+        <span
+          style="margin-right: 25px"
+          nz-checkbox
+          [(ngModel)]="allRolesChecked"
+          (ngModelChange)="updateAllChecked()"
+        >
+        </span>
+        <span>#</span>
+      </th>
+      <th>Role</th>
+      <th>View</th>
+      <th>Add</th>
+      <th>Edit</th>
+      <th>Delete</th>
+      <th>Cancel</th>
+      <th style="border-top-right-radius: 10px">Download</th>
+    </tr>
+  </thead>
+  <tbody class="bg-white divide-y divide-gray-200">
+    <ng-container
+      *ngFor="let data of eventsTable.data; let i = index"
+    >
+      <tr [class.bg-gray-100]="i % 2 === 0">
+        <td class="text-left text-primary font-semibold">
+          <span
+            style="margin-right: 25px"
+            nz-checkbox
+            [ngModel]="data.checked"
+            (nzCheckedChange)="logRowChanges($event, data)"
+          >
+          </span>
+          <span>{{i + 1}}.</span>
+        </td>
+        <td>{{ data?.roleName }}</td>
+        <td>
+          <label
+            [nzDisabled]="!data.operation.includes('View')"
+            nz-checkbox
+            [(ngModel)]="data.View.checked"
+            [nzChecked]="data?.View.checked || false"
+            [nzValue]="data?.View?.roleId || 0"
+            (ngModelChange)="logChanges(data.View)"
+          >
+          </label>
+        </td>
+        <td>
+          <label
+            [nzDisabled]="!data.operation.includes('Add')"
+            nz-checkbox
+            [(ngModel)]="data.Add.checked"
+            [nzChecked]="data?.Add?.checked || false"
+            [nzValue]="data?.Add?.roleId || 0"
+            (ngModelChange)="logChanges(data.Add)"
+          >
+          </label>
+        </td>
+        <td>
+          <label
+            [nzDisabled]="!data.operation.includes('Edit')"
+            nz-checkbox
+            [(ngModel)]="data.Edit.checked"
+            [nzChecked]="data?.Edit?.checked || false"
+            [nzValue]="data?.Edit?.roleId || 0"
+            (ngModelChange)="logChanges(data.Edit)"
+          >
+          </label>
+        </td>
+        <td>
+          <label
+            [nzDisabled]="!data.operation.includes('Delete')"
+            nz-checkbox
+            [(ngModel)]="data.Delete.checked"
+            [nzChecked]="data?.Delete?.checked || false"
+            [nzValue]="data?.Delete?.roleId || 0"
+            (ngModelChange)="logChanges(data.Delete)"
+          >
+          </label>
+        </td>
+        <td>
+          <label
+            [nzDisabled]="!data.operation.includes('Cancel')"
+            nz-checkbox
+            [(ngModel)]="data.Cancel.checked"
+            [nzChecked]="data?.Cancel?.checked || false"
+            [nzValue]="data?.Cancel?.roleId || 0"
+            (ngModelChange)="logChanges(data.Cancel)"
+          >
+          </label>
+        </td>
+        <td>
+          <label
+            [nzDisabled]="!data.operation.includes('Download')"
+            nz-checkbox
+            [(ngModel)]="data.Download.checked"
+            [nzChecked]="data?.Download?.checked || false"
+            [nzValue]="data?.Download?.roleId || 0"
+            (ngModelChange)="logChanges(data.Download)"
+          >
+          </label>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</nz-table> -->
+
+<!-- <div *ngIf="loading" class="flex justify-center items-center">
+  <i class="fas fa-sync text-xl fa-spin mr-1 text-green-400 mt-3"></i>
+</div> -->
+
+<nz-tree
+[nzData]="nodes"
+nzCheckable
+nzMultiple
+[nzCheckedKeys]="defaultCheckedKeys"
+[nzExpandedKeys]="defaultExpandedKeys"
+[nzSelectedKeys]="defaultSelectedKeys"
+(nzClick)="nzEvent($event)"
+(nzExpandChange)="nzEvent($event)"
+(nzCheckBoxChange)="nzEvent($event)"
+></nz-tree>
+
+

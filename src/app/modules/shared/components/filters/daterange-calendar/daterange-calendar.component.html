@@ -1,0 +1,56 @@
+<div class="relative">
+  <input
+    class="w-full outline-none h-9 text-sm p-3 rounded-none text-gray-500 font-semibold rounded"
+    placeholder="Select Date Range"
+    nz-popover
+    nzPopoverTrigger="click"
+    nzPopoverPlacement="bottomRight"
+    [nzPopoverTitle]="contentCustomRangeClose"
+    [nzPopoverContent]="rangeQueriesTemplate"
+    [(nzPopoverVisible)]="popoverCustomRangeVisible"
+    [(ngModel)]="selectedCustomRangeText"
+    (keyup)="changeDateRange()"
+  />
+  <div class="absolute right-2.5" style="top: 0.2rem">
+    <a *ngIf="!popoverCustomRangeVisible && !selectedCustomRangeText">
+      <i nz-icon nzType="down" nzTheme="outline" class="icon"></i>
+    </a>
+    <a *ngIf="popoverCustomRangeVisible && !selectedCustomRangeText">
+      <i nz-icon nzType="search" nzTheme="outline" class="icon"></i>
+    </a>
+    <a *ngIf="selectedCustomRangeText" (click)="changeDateRange()">
+      <i nz-icon nzType="close" nzTheme="outline" class="icon"></i>
+    </a>
+  </div>
+</div>
+
+<ng-template #contentCustomRangeClose>
+  <a class="float-right" (click)="popoverCustomRangeVisible = false"
+    ><i nz-icon nzType="close" nzTheme="outline"></i
+  ></a>
+</ng-template>
+<ng-template #rangeQueriesTemplate>
+  <nz-divider></nz-divider>
+  <h4 class="mb-4 text-gray-600 font-semibold">Date</h4>
+
+  <nz-range-picker
+    class="mr-2 mb-3"
+    [nzShowTime]="{ nzFormat: 'HH:mm' }"
+    nzFormat="-dd-MM-yyyy HH:mm"
+    [(ngModel)]="dateRangePicker"
+    (nzOnOk)="onOk($event)"
+  ></nz-range-picker>
+  <div style="width: 450px">
+    <h4 class="mb-4 text-gray-600 font-semibold">Frequently Used</h4>
+    <div class="grid grid-cols-2">
+      <div class="range-items" *ngFor="let item of rangeQueries">
+        <a
+          class="my-1 text-gray-400 text-xs hover:text-green-600 focus:text-green-600 active:text-green-600"
+          (click)="timeQueryChanged(item, false)"
+        >
+          {{ item.label }}
+        </a>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,188 @@
+<div class="wrapper mx-3 my-1" *ngIf="!taskNoLoading">
+  <h1 class="text-center text-green-600 text-2xl font-semibold mb-3">Task No: {{taskNo}}</h1>
+  <form class="form" [formGroup]="formGroup" autocomplete="off">
+    <div class="grid grid-cols-12">
+      <div class="col-span-2 flex items-center my-3">
+        <label class="form-control-label text-sm text-gray-700 font-semibold"
+          >Export Format:</label
+        >
+      </div>
+      <div class="col-span-10 my-2">
+        <nz-form-control>
+          <nz-select
+            class="h-9 bg-white dark:text-white w-full text-xs rounded-md"
+            formControlName="export_format"
+          >
+            <nz-option
+              *ngFor="let item of export_formats"
+              [nzValue]="item.value"
+              [nzLabel]="item.name"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </div>
+
+      <div class="col-span-2 flex items-center my-3">
+        <label class="form-control-label text-sm text-gray-700 font-semibold"
+          >Records:</label
+        >
+      </div>
+      <ng-container *ngIf="!eventsSelected.length && !singleExport">
+        <div class="col-span-10 my-2">
+          <nz-form-control style="width: 48%; float: left;">
+            <input
+              nz-input
+              numberRange
+              class="nbc-input"
+              placeholder="Starting Point"
+              formControlName="from"
+              [readonly]="exportVisible === 'chart'"
+            />
+          </nz-form-control>
+          <nz-form-control style="width: 48%; float: right;">
+            <input
+              nz-input
+              numberRange
+              class="nbc-input"
+              placeholder="Limit"
+              formControlName="size"
+              [readonly]="exportVisible === 'chart'"
+            />
+          </nz-form-control>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="eventsSelected.length || singleExport">
+        <div class="col-span-10 my-2">
+          <nz-form-control>
+            <input
+              nz-input
+              readonly
+              class="nbc-input"
+              placeholder="Events Selected"
+              [ngModel]="
+                singleExport
+                  ? '1 Record Selected'
+                  : eventsSelected.length + ' Records Selected'
+              "
+              [ngModelOptions]="{ standalone: true }"
+            />
+          </nz-form-control>
+        </div>
+      </ng-container>
+
+      <div class="col-span-2 flex items-center my-3">
+        <label class="form-control-label text-sm text-gray-700 font-semibold"
+          >Fields:</label
+        >
+      </div>
+      <div class="col-span-10 my-2">
+        <nz-form-control>
+          <nz-select
+            class="isps-status-select"
+            formControlName="field_type"
+            [nzDisabled]="chartFields || exportVisible === 'chart'"
+          >
+            <nz-option
+              *ngFor="let item of field_types"
+              [nzValue]="item.value"
+              [nzLabel]="item.name"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </div>
+
+      <ng-container *ngIf="formDataFieldType.value === 'custom'">
+        <div class="col-span-2 flex items-center my-3">
+          <label class="form-control-label text-sm text-gray-700 font-semibold"
+            >Custom Fields:</label
+          >
+        </div>
+        <div class="col-span-10 my-2">
+          <nz-form-control>
+            <nz-select
+              class="search"
+              formControlName="fields_list"
+              nzShowSearch
+              nzMode="multiple"
+              [nzAllowClear]="false"
+              [nzMaxTagCount]="4"
+              [nzMultiple]="true"
+              [nzMaxTagPlaceholder]="omittedPlaceHolder"
+            >
+              <nz-option
+                *ngFor="let option of queryItems"
+                [nzLabel]="option.name"
+                [nzValue]="option.value"
+              ></nz-option>
+            </nz-select>
+            <ng-template #omittedPlaceHolder let-omittedValues
+              >and {{ omittedValues.length }} more...</ng-template
+            >
+          </nz-form-control>
+        </div>
+      </ng-container>
+
+      <div class="col-span-2 flex items-center my-3">
+        <label class="form-control-label text-sm text-gray-700 font-semibold"
+          >Export Title:</label
+        >
+      </div>
+      <div class="col-span-10 my-2">
+        <nz-form-control>
+          <input
+            nz-input
+            class="nbc-input"
+            placeholder="Export Title"
+            formControlName="title"
+          />
+        </nz-form-control>
+      </div>
+
+      <div class="col-span-2 flex items-center my-3">
+        <label class="form-control-label text-sm text-gray-700 font-semibold"
+          >Export Description:</label
+        >
+      </div>
+      <div class="col-span-10 my-2">
+        <nz-form-control>
+          <textarea
+            nz-input
+            rows="4"
+            class="h-9 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs rounded-md"
+            formControlName="task_description"
+            placeHolder="Export Description"
+          ></textarea>
+        </nz-form-control>
+      </div>
+
+      <div class="col-span-10 mt-4 mb-2"></div>
+      <div class="col-span-2 mt-4 mb-2">
+        <button
+          type="button"
+          style="
+            padding: 0.5rem;
+            border: 1px solid #e97ba0;
+            box-shadow: -1px 1px 5px 0px rgb(87 114 122);
+          "
+          class="transform motion-safe:hover:scale-110 font-semibold w-full h-9 text-white bg-gradient-to-r from-pink-500 to-orange-400 hover:bg-gradient-to-l focus:ring-4 focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-xs px-10 py-2 text-center"
+          [disabled]="!formGroup.valid"
+          (click)="exportData()"
+        >
+          <span *ngIf="loading" class="mr-2">
+            <i nz-icon [nzType]="'loading'"></i>
+          </span>
+          <span>Export Data</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="taskNoLoading" class="flex justify-center items-center">
+  <div
+    class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-green-600"
+    role="status"
+  >
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>

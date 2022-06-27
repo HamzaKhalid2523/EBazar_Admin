@@ -1,0 +1,91 @@
+<div
+  class="navbar shadow-sm bg-white border-gray-200 px-6 sm:px-8 py-0 h-8 dark:bg-gray-800"
+  [style.border-bottom]="
+    submenuSelection?.length <= 0 || !mainMenuToggle
+      ? 'none'
+      : '1px solid #e9e3e3'
+  "
+>
+  <div class="px-2 mx-2 navbar-start">
+    <a style="width: 230px" [routerLink]="'/pages'">
+      <img src="/assets/images/ebazar.svg" />
+    </a>
+  </div>
+  <div class="hidden px-2 mx-2 h-full navbar-center lg:flex">
+    <app-nav-menu
+      class="h-full"
+      [submenuItem]="submenuItem"
+      (selection)="selectedvalue($event)"
+      (menuname)="menuname($event)"
+    ></app-nav-menu>
+  </div>
+  <div class="navbar-end">
+    <button
+      class="btn btn-square w-fit btn-ghost mx-1 hover:bg-none"
+      id="dropdown-btn"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+    <span class="w-7 h-7 font-semibold flex justify-center items-center text-white" style="font-size: 0.8rem; border-radius: 50%; background: #567698;">
+      {{currentUser?.username.charAt(0)}}
+    </span>
+      <span class="text-sm font-semibold text-gray-900 ml-2">{{
+        currentUser?.username | titlecase
+      }}</span>
+    </button>
+    <ul
+      style="top: 55px; right: 30px; box-shadow: 0px 1px 6px 0px #b6b1b1"
+      class="dropdown-menu min-w-max absolute right-0 hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg mt-1 hidden m-0 bg-clip-padding border-none"
+      aria-labelledby="dropdown-btn"
+    >
+      <li>
+        <a
+          class="dropdown-item flex items-center text-sm py-2 px-6 font-semibold block w-full whitespace-nowrap bg-transparent text-gray-600 hover:bg-blue-100 hover:text-gray-700"
+          (click)="logoutUser()"
+        >
+          <i nz-icon nzType="logout" nzTheme="outline" class="mr-4 text-sm"></i>
+          Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div
+  *ngIf="paddingvalue"
+  [ngClass]="{ 'to-hide': !mainMenuToggle }"
+  class="navbar bg-white border-gray-200 px-6 sm:px-8 py-0 h-8 rounded dark:bg-gray-800 relative"
+  style="
+    min-height: 54px;
+    opacity: 0;
+    margin-top: -55px;
+    box-shadow: 3px 8px 5px 0px rgb(0 0 0 / 6%);
+  "
+  [ngClass]="{
+    'hover-to-show-new': submenuSelection,
+    'hover-to-show': submenuSelection,
+    'to-hide': !submenuSelection
+  }"
+  [ngStyle]="{
+    'padding-left': paddingvalue ? paddingvalue : '0'
+  }"
+>
+  <ul class="sub h-full" [ngClass]="{ 'hover-to-show': submenuSelection }">
+    <li
+      class="mx-2 h-full"
+      *ngFor="let item of submenuSelection"
+      [class.disabledNav]="item.disabled"
+      (click)="toggleMenu(item.path)"
+    >
+      <a
+        [class.active]="item.title === submenuItem?.title"
+        class="sublist attri font-semibold text-sm uppercase"
+      >
+        <i
+          style="font-size: 0.8rem; margin-right: 10px"
+          [class]="item.icon"
+        ></i>
+        {{ item.title }}</a
+      >
+    </li>
+  </ul>
+</div>

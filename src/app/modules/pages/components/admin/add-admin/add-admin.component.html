@@ -1,0 +1,294 @@
+<div class="profileCard">
+  <div *ngIf="formType === 'Update'" class="flex justify-center mb-6">
+    <div class="bg-gradient-to-r from-green-500 to-blue-500 inline-flex rounded-md shadow-sm" role="group">
+      <button
+        (click)="defaultTab = 'Edit Profile'"
+        style="min-width: 150px; border: 1px solid #1d816d;"
+        [class]="defaultTab === 'Edit Profile' ? 'text-white' : 'text-gray-200'"
+        class="bg-transparent font-semibold inline-flex items-center py-2 px-4 text-sm font-medium bg-white rounded-l-lg border border-gray-200 hover:text-white dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+      >
+        <i nz-icon nzType="edit" nzTheme="outline" class="mr-2"></i>
+        Edit Profile
+      </button>
+      <button
+        (click)="defaultTab = 'Change Password'"
+        style="min-width: 150px; border: 1px solid #2492ad"
+        [class]="defaultTab === 'Change Password' ? 'text-white' : 'text-gray-200'"
+        class="bg-transparent font-semibold inline-flex items-center py-2 px-4 text-sm font-medium bg-white rounded-r-md border border-gray-200 hover:text-white dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+      >
+        <i nz-icon nzType="lock" nzTheme="outline" class="mr-2"></i>
+        Change Password
+      </button>
+    </div>
+  </div>
+
+  <form
+    class="form-horizontal"
+    [formGroup]="userForm"
+    autocomplete="off"
+    *ngIf="defaultTab === 'Edit Profile'"
+  >
+    <div class="grid grid-cols-12">
+      <div class="col-span-1 flex items-center my-3 px-4">
+        <label class="form-control-label text-sm text-gray-700 font-semibold">Image</label>
+      </div>
+      <div class="col-span-11 my-3">
+        <div class="h-40 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs rounded-md">
+          <ng-container *ngIf="formType === 'Create' else updateImageBlock">
+            <app-image-picker
+              (imagePick)="onImagePicked($event)"
+            ></app-image-picker>
+          </ng-container>
+          <ng-template #updateImageBlock>
+            <app-image-picker
+              [photo]="userForm.get('photoAvatar').value"
+              (imagePick)="onImagePicked($event)"
+            ></app-image-picker>
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-span-1 flex items-center my-3 px-4">
+        <label class="form-control-label text-sm text-gray-700 font-semibold">Username</label>
+      </div>
+      <div class="col-span-5 my-3">
+        <nz-form-control>
+          <input
+            nz-input
+            class="h-10 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs rounded-md"
+            formControlName="username"
+            placeHolder="Please Enter Username!"
+            autocomplete="off"
+            [ngClass]="{
+              error:
+                userForm.controls['username'].dirty &&
+                userForm.controls['username'].touched &&
+                userForm.controls['username'].invalid
+            }"
+          />
+        </nz-form-control>
+      </div>
+      <div class="col-span-1 flex items-center my-3 px-4">
+        <label class="form-control-label text-sm text-gray-700 font-semibold">Email</label>
+      </div>
+      <div class="col-span-5 my-3">
+        <nz-form-control>
+          <input
+            nz-input
+            class="h-10 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs rounded-md"
+            formControlName="email"
+            placeHolder="Please Enter Email!"
+            autocomplete="off"
+            [ngClass]="{
+              error:
+                userForm.controls['email'].dirty &&
+                userForm.controls['email'].touched &&
+                userForm.controls['email'].invalid
+            }"
+          />
+        </nz-form-control>
+      </div>
+      <div class="col-span-1 flex items-center my-3 px-4">
+        <label class="form-control-label text-sm text-gray-700 font-semibold">Phone</label>
+      </div>
+      <div class="col-span-5 my-3">
+        <nz-form-control>
+          <input
+            nz-input
+            class="h-10 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs rounded-md"
+            formControlName="phone"
+            placeHolder="Please Enter Phone!"
+            autocomplete="off"
+            [ngClass]="{
+              error:
+                userForm.controls['phone'].dirty &&
+                userForm.controls['phone'].touched &&
+                userForm.controls['phone'].invalid
+            }"
+          />
+        </nz-form-control>
+      </div>
+      <div class="col-span-1 flex items-center my-3 px-4">
+        <label class="form-control-label text-sm text-gray-700 font-semibold">Password</label>
+      </div>
+      <div class="col-span-5 my-3">
+        <nz-form-control>
+          <input
+            nz-input
+            class="h-10 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs rounded-md"
+            type="password"
+            formControlName="password"
+            placeHolder="Please Enter Password!"
+            [ngClass]="{
+              error:
+                userForm.controls['password'].dirty &&
+                userForm.controls['password'].touched &&
+                userForm.controls['password'].invalid
+            }"
+          />
+        </nz-form-control>
+      </div>
+      <div class="col-span-1 flex items-center my-3 px-4">
+        <label class="form-control-label text-sm text-gray-700 font-semibold">Role</label>
+      </div>
+      <div class="col-span-5 my-3">
+        <nz-form-control>
+          <nz-select
+            class="h-10 bg-white dark:text-white w-full text-xs rounded-md"
+            formControlName="role"
+          >
+            <nz-option
+                *ngFor="let item of roleTypes"
+                [nzValue]="item.value"
+                [nzLabel]="item.label"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </div>
+      <div class="col-span-1 flex items-center my-3 px-4">
+        <label class="form-control-label text-sm text-gray-700 font-semibold">CNIC</label>
+      </div>
+      <div class="col-span-5 my-3">
+        <nz-form-control>
+          <input
+            nz-input
+            class="h-10 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs rounded-md"
+            formControlName="cnic"
+            placeHolder="Please Enter CNIC!"
+            autocomplete="off"
+            [ngClass]="{
+              error:
+                userForm.controls['cnic'].dirty &&
+                userForm.controls['cnic'].touched &&
+                userForm.controls['cnic'].invalid
+            }"
+          />
+        </nz-form-control>
+      </div>
+      <div class="col-span-1 flex items-center my-3 px-4">
+        <label class="form-control-label text-sm text-gray-700 font-semibold">Address</label>
+      </div>
+      <div class="col-span-11 my-3">
+        <nz-form-control>
+          <textarea
+            nz-input
+            rows="4"
+            class="h-10 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs rounded-md resize-none"
+            formControlName="address"
+            placeHolder="Enter Address!"
+          ></textarea>
+        </nz-form-control>
+      </div>
+
+      <div class="col-span-10 mt-4 mb-2"></div>
+      <div class="col-span-2 mt-4 mb-2">
+        <button
+          type="button"
+          style="
+            padding: 0.5rem;
+            border: 1px solid #e97ba0;
+            box-shadow: -1px 1px 5px 0px rgb(87 114 122);
+          "
+          class="transform motion-safe:hover:scale-110 font-semibold w-full h-10 text-white bg-gradient-to-r from-pink-500 to-orange-400 hover:bg-gradient-to-l focus:ring-4 focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-xs px-10 py-2 text-center"
+          [disabled]="!userForm.valid"
+          (click)="submitForm()"
+        >
+          <span *ngIf="userLoading">
+            <i nz-icon [nzType]="'loading'"></i>
+          </span>
+          <span *ngIf="formType === 'Create'">Save</span>
+          <span *ngIf="formType === 'Update'">Update</span>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <form
+    class="form-horizontal"
+    [formGroup]="passwordForm"
+    autocomplete="off"
+    *ngIf="defaultTab === 'Change Password'"
+  >
+    <div class="grid grid-cols-12">
+      <div class="col-span-2 flex items-center my-3 px-4">
+        <label class="form-control-label text-sm text-gray-700 font-semibold">Current Password</label>
+      </div>
+      <div class="col-span-10 my-3">
+        <nz-form-control>
+          <input
+            nz-input
+            class="h-10 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs rounded-md"
+            type="password"
+            formControlName="currentPassword"
+            nzPlaceHolder="Please Enter Current Password"
+            [ngClass]="{
+            error:
+                passwordForm.controls['currentPassword'].dirty &&
+                passwordForm.controls['currentPassword'].touched &&
+                passwordForm.controls['currentPassword'].invalid
+            }"
+          />
+        </nz-form-control>
+      </div>
+      <div class="col-span-2 flex items-center my-3 px-4">
+        <label class="form-control-label text-sm text-gray-700 font-semibold">New Password</label>
+      </div>
+      <div class="col-span-10 my-3">
+        <nz-form-control>
+          <input
+            nz-input
+            class="h-10 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs rounded-md"
+            type="password"
+            formControlName="newPassword"
+            nzPlaceHolder="Please Enter New Password"
+            [ngClass]="{
+            error:
+                passwordForm.controls['newPassword'].dirty &&
+                passwordForm.controls['newPassword'].touched &&
+                passwordForm.controls['newPassword'].invalid
+            }"
+          />
+        </nz-form-control>
+      </div>
+      <div class="col-span-2 flex items-center my-3 px-4">
+        <label class="form-control-label text-sm text-gray-700 font-semibold">Confirm Password</label>
+      </div>
+      <div class="col-span-10 my-3">
+        <nz-form-control>
+          <input
+            nz-input
+            class="h-10 bg-white border border-gray-300 dark:border-gray-700 dark:text-white w-full text-xs rounded-md"
+            type="password"
+            formControlName="confirmPassword"
+            nzPlaceHolder="Please Confirm Password"
+            [ngClass]="{
+            error:
+                passwordForm.controls['confirmPassword'].dirty &&
+                passwordForm.controls['confirmPassword'].touched &&
+                passwordForm.controls['confirmPassword'].invalid
+            }"
+          />
+        </nz-form-control>
+      </div>
+
+      <div class="col-span-10 mt-4 mb-2"></div>
+      <div class="col-span-2 mt-4 mb-2">
+        <button
+          type="button"
+          style="
+            padding: 0.5rem;
+            border: 1px solid #e97ba0;
+            box-shadow: -1px 1px 5px 0px rgb(87 114 122);
+          "
+          class="transform motion-safe:hover:scale-110 font-semibold w-full h-10 text-white bg-gradient-to-r from-pink-500 to-orange-400 hover:bg-gradient-to-l focus:ring-4 focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-xs px-10 py-2 text-center"
+          [disabled]="!passwordForm.valid"
+          (click)="changePassord()"
+        >
+          <span *ngIf="userLoading">
+            <i nz-icon [nzType]="'loading'"></i>
+          </span>
+          <span>Change Password</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

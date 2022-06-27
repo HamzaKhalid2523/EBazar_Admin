@@ -1,0 +1,97 @@
+.navbar {
+  box-shadow: -1px -1px 11px 0px rgb(148 148 148);
+}
+
+#top-ul {
+  height: 25px;
+  margin: 0;
+}
+.box-shadow {
+  box-shadow: rgba(0, 0, 0, 0.06) 3px 8px 5px 0px;
+}
+li {
+  float: left;
+
+  list-style-type: none;
+}
+.attri {
+  padding: 10px;
+}
+
+.disabledNav {
+  color: red
+}
+.sub {
+  position: absolute;
+  // top: 64px;
+  padding-left: 5px;
+  font-size: 14px;
+}
+
+.background {
+  margin-top: 50px;
+  min-height: 54px;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+.sublist {
+  padding: 15px;
+  border-radius: 0 !important;
+}
+.sub a:hover {
+  background-color: #ebdfdfc5;
+}
+
+.sub li a {
+  padding-right: 12px;
+}
+.hover-to-show {
+  opacity: 1 !important;
+  transition: all 0.4s ease-in-out;
+}
+.hover-to-show-new {
+  margin-top: 0 !important;
+  opacity: 1 !important;
+  transition: all 0.4s ease-in-out;
+}
+.to-hide {
+  opacity: 0 !important;
+  transition: all 0.4s ease-in-out;
+}
+
+.hover-to-show-link:hover .hover-to-show {
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}
+
+
+.sub {
+
+    a {
+      @apply h-full text-sm uppercase flex hover:border-b-2 hover:border-green-500 items-center font-semibold block py-2 mx-1  text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-green-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700;
+
+
+      &.active {
+        @apply text-green-500  border-b-2 border-green-500;
+
+        i {
+          @apply text-transparent bg-clip-text bg-gradient-to-br from-green-500 to-blue-600;
+        }
+      }
+  }
+  i {
+    @apply text-base hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-green-600;
+  }
+
+}
+
+.topright {
+  position: absolute;
+  top: 8px;
+  left: 200px;
+  font-size: 18px;
+}
+
+.btn-ghost:hover {
+  background: none;
+}

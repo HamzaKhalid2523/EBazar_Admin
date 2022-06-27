@@ -1,0 +1,26 @@
+<div class="flex-container text-left">
+  <div
+    class="box"
+    *ngFor="let d of data"
+    [class.clear]="d?.statusStr === 'Clear'"
+    [class.attention]="d?.statusStr === 'Attention'"
+    [class.critical]="d?.statusStr === 'Critical'"
+  >
+    <div class="content">
+        <div class="grid grid-cols-3">
+            <div class="col-span-1">Device Name</div>
+            <div class="col-span-2">: {{d?.displayName}}</div>
+            <div class="col-span-1">IP Address</div>
+            <div class="col-span-2">: {{d?.ipaddress}}</div>
+            <div class="col-span-1">Category</div>
+            <div class="col-span-2">: {{d?.category}}</div>
+            <div class="col-span-1">Server</div>
+            <div class="col-span-2" *ngIf="d?.statusStr === 'Clear'">: Good</div>
+            <div class="col-span-2" *ngIf="d?.statusStr === 'Attention'">: Info</div>
+            <div class="col-span-2" *ngIf="d?.statusStr === 'Critical'">: Warning</div>
+            <div class="col-span-1">Type</div>
+            <div class="col-span-2">: {{d?.type}}</div>
+        </div>
+    </div>
+  </div>
+</div>

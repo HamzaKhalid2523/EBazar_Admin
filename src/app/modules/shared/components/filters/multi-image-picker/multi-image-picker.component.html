@@ -1,0 +1,20 @@
+<div class="picker relative px-4" style="min-height: 10rem;">
+  <div *ngFor="let photo of photos; let i = index" class="mx-4 my-2">
+    <div class="avatar">
+      <img [src]="photo" alt="" class="image" />
+      <div class="close-icon absolute top-0 right-0 cursor-pointer" (click)="removeImageEvent(i)">
+        <i nz-icon nzType="close" nzTheme="outline"></i>
+      </div>
+    </div>
+  </div>
+  <div class="icon" (click)="onPickImage()">
+    <i class="fa fa-camera"></i>
+  </div>
+</div>
+<input
+  type="file"
+  accept=".jpg, .jpeg, .png"
+  #filePicker
+  multiple
+  (change)="onFileChosen($event)"
+/>

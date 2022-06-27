@@ -1,0 +1,48 @@
+<div class="body-login">
+  <h1 class="mb-10 text-gray-400 text-4xl font-semibold">
+    Welcome, <span style="color: #dd135b;">Login to Continue</span>
+  </h1>
+  <div class="main">
+    <input type="checkbox" id="chk" />
+
+    <div class="signup p-8 relative w-full h-full flex justify-center items-center">
+      <form [formGroup]="loginForm" class="sign-form validate-form w-full h-full p-8">
+        <label for="chk" class="sig mb-8">
+          <div style="width: 350px">
+            <img src="/assets/images/ebazar.svg" />
+          </div>
+        </label>
+
+        <div class="sig divider" style="margin: 0 auto 45px;"></div>
+
+        <div class="user-box">
+          <input
+            type="text"
+            formControlName="user"
+            title="Enter Email or Phone"
+            required
+          />
+          <label>Email or Phone</label>
+        </div>
+
+        <div class="user-box">
+          <input
+            formControlName="password"
+            type="password"
+            title="Enter password"
+            required
+          />
+          <label>Password</label>
+        </div>
+
+        <button class="login-btn" [disabled]="!loginForm.valid" (click)="login()">
+          <span>
+            <i *ngIf="loading" class="fas fa-sync fa-spin mr-1"></i>
+            Login
+          </span>
+          <div class="liquid"></div>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
